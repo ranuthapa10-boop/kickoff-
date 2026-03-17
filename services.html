@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KICKOFF — Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --lime: #c8f135;
+      --dark: #080808;
+      --surface: #0f0f0f;
+      --card: #131313;
+      --border: #1c1c1c;
+      --text: #f0f0f0;
+      --muted: #555;
+      --accent: #ff4500;
+      --white: #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--lime);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, background .2s;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(200,241,53,.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all .12s ease-out;
+    }
+    body:hover .cursor { opacity: 1; }
+
+    /* ── NOISE GRAIN ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9000; opacity:.5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 68px;
+      background: rgba(8,8,8,.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 4px;
+      color: var(--lime); text-decoration: none;
+    }
+    .nav-logo span { color: var(--muted); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--lime); }
+    .nav-cta {
+      background: var(--lime); color: #000;
+      border: none; border-radius: 6px;
+      padding: .5rem 1.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: .8rem;
+      letter-spacing: 1px; cursor: pointer;
+      transition: background .2s, transform .15s;
+      text-decoration: none;
+    }
+    .nav-cta:hover { background: #d9ff3a; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,241,53,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,241,53,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent);
+    }
+
+    .hero-orb {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(200,241,53,.08) 0%, transparent 65%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: .6rem;
+      background: rgba(200,241,53,.07);
+      border: 1px solid rgba(200,241,53,.2);
+      color: var(--lime);
+      font-size: .72rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      padding: .35rem 1rem; border-radius: 100px;
+      margin-bottom: 2rem; z-index: 1;
+      animation: fadeUp .6s ease both;
+    }
+    .hero-eyebrow::before { content: '●'; font-size: .5rem; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 10vw, 9rem);
+      line-height: .9; letter-spacing: 3px;
+      z-index: 1;
+      animation: fadeUp .6s .1s ease both;
+    }
+    .hero h1 .outline {
+      -webkit-text-stroke: 1.5px var(--lime);
+      color: transparent;
+    }
+    .hero h1 .fill { color: var(--lime); }
+
+    .hero-sub {
+      max-width: 540px; margin: 2rem auto 0;
+      color: var(--muted); font-size: 1.05rem; line-height: 1.7;
+      z-index: 1;
+      animation: fadeUp .6s .2s ease both;
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: var(--muted); font-size: .7rem; letter-spacing: 2px; text-transform: uppercase;
+      animation: fadeUp .6s .5s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--lime), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+    @keyframes scrollPulse {
+      0%  { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      100%{ transform: scaleY(1); transform-origin: top; opacity: 0; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(28px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: flex; align-items: stretch;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .stat {
+      flex: 1; padding: 2.5rem 1.5rem;
+      display: flex; flex-direction: column; gap: .4rem;
+      border-right: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background .25s;
+    }
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: rgba(200,241,53,.03); }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem; letter-spacing: 1px; color: var(--lime);
+      line-height: 1;
+    }
+    .stat-label { font-size: .78rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+    /* ── SECTION COMMONS ── */
+    .section { padding: 6rem 3rem; }
+    .section-eyebrow {
+      font-size: .72rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--lime);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 2px; line-height: 1; margin-bottom: 1.2rem;
+    }
+    .section-title span { color: var(--lime); }
+    .section-desc { color: var(--muted); font-size: 1rem; line-height: 1.75; max-width: 500px; }
+
+    /* ── SERVICES GRID ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 4rem;
+    }
+
+    .service-card {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .service-card:nth-child(3n) { border-right: none; }
+    .service-card:nth-last-child(-n+3) { border-bottom: none; }
+    .service-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(200,241,53,.06), transparent 60%);
+      opacity: 0; transition: opacity .4s;
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-card:hover { background: rgba(255,255,255,.015); }
+
+    .sc-icon {
+      font-size: 2.5rem; margin-bottom: 1.5rem;
+      display: inline-block;
+      transition: transform .3s;
+    }
+    .service-card:hover .sc-icon { transform: scale(1.15) rotate(-5deg); }
+
+    .sc-tag {
+      display: inline-block;
+      font-size: .65rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--lime);
+      background: rgba(200,241,53,.08);
+      border: 1px solid rgba(200,241,53,.2);
+      padding: .2rem .6rem; border-radius: 4px;
+      margin-bottom: .75rem;
+    }
+
+    .sc-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 1px;
+      margin-bottom: .75rem; line-height: 1.1;
+    }
+
+    .sc-desc { font-size: .88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+
+    .sc-features { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .sc-features li {
+      font-size: .82rem; color: #888;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .sc-features li::before {
+      content: '→';
+      color: var(--lime); font-size: .75rem; flex-shrink: 0;
+    }
+
+    .sc-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      margin-top: 1.5rem; color: var(--lime);
+      font-size: .8rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; text-decoration: none;
+      border-bottom: 1px solid rgba(200,241,53,.3);
+      padding-bottom: 2px;
+      transition: gap .2s, border-color .2s;
+    }
+    .sc-link:hover { gap: .8rem; border-color: var(--lime); }
+
+    /* ── FEATURED SERVICE (WIDE) ── */
+    .feature-band {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .fb-left {
+      padding: 4rem 3rem;
+      display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;
+    }
+
+    .fb-visual {
+      background: #0d0d0d;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; min-height: 380px;
+    }
+
+    .fb-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 60% 50%, rgba(200,241,53,.08), transparent 60%);
+    }
+
+    .fb-pitch {
+      width: 280px; height: 180px;
+      border: 2px solid rgba(200,241,53,.25);
+      border-radius: 8px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .fb-pitch::before {
+      content: '';
+      position: absolute;
+      width: 80px; height: 80px;
+      border: 2px solid rgba(200,241,53,.25);
+      border-radius: 50%;
+    }
+    .fb-pitch::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 2px; background: rgba(200,241,53,.15);
+      transform: translateX(-50%);
+    }
+    .fb-goal {
+      position: absolute;
+      width: 50px; height: 28px;
+      border: 2px solid rgba(200,241,53,.35);
+      border-bottom: none;
+    }
+    .fb-goal.left { left: -2px; top: 50%; transform: translateY(-50%); border-left: none; }
+    .fb-goal.right { right: -2px; top: 50%; transform: translateY(-50%); border-right: none; }
+
+    .fb-check-list {
+      list-style: none; display: flex; flex-direction: column; gap: .75rem;
+    }
+    .fb-check-list li {
+      display: flex; align-items: flex-start; gap: .75rem;
+      font-size: .9rem; line-height: 1.5;
+    }
+    .fb-check-list li .check {
+      width: 20px; height: 20px; flex-shrink: 0;
+      background: rgba(200,241,53,.1);
+      border: 1px solid rgba(200,241,53,.3);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--lime); font-size: .7rem; margin-top: 2px;
+    }
+
+    /* ── PROCESS TIMELINE ── */
+    .process-section { background: var(--surface); }
+    .process-track {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-top: 4rem;
+      position: relative;
+    }
+    .process-track::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--lime), transparent);
+      opacity: .25;
+    }
+
+    .process-step {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 1rem;
+      position: relative;
+    }
+
+    .ps-num {
+      width: 56px; height: 56px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; color: var(--lime);
+      background: var(--surface);
+      position: relative; z-index: 1;
+      transition: background .3s, border-color .3s;
+      margin-bottom: 1.25rem;
+    }
+    .process-step:hover .ps-num {
+      background: rgba(200,241,53,.1);
+      border-color: rgba(200,241,53,.4);
+    }
+
+    .ps-icon { font-size: 1.4rem; margin-bottom: .75rem; }
+    .ps-title { font-weight: 700; font-size: .9rem; margin-bottom: .4rem; }
+    .ps-desc { font-size: .78rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── MEMBERSHIP TIERS ── */
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .tier-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+    .tier-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(200,241,53,.3);
+      box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    }
+    .tier-card.featured {
+      border-color: rgba(200,241,53,.5);
+      background: linear-gradient(160deg, rgba(200,241,53,.06), var(--card) 60%);
+    }
+    .tier-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute; top: 16px; right: 16px;
+      background: var(--lime); color: #000;
+      font-size: .6rem; font-weight: 700; letter-spacing: 2px;
+      padding: .25rem .6rem; border-radius: 4px;
+    }
+
+    .tier-icon { font-size: 2rem; margin-bottom: 1.25rem; }
+    .tier-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem; letter-spacing: 2px;
+      margin-bottom: .5rem;
+    }
+    .tier-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem; letter-spacing: 1px;
+      color: var(--lime); line-height: 1;
+      margin-bottom: .25rem;
+    }
+    .tier-price sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem; font-weight: 400;
+      color: var(--muted); vertical-align: middle;
+    }
+    .tier-cycle { font-size: .75rem; color: var(--muted); margin-bottom: 2rem; }
+
+    .tier-perks { list-style: none; display: flex; flex-direction: column; gap: .7rem; margin-bottom: 2rem; }
+    .tier-perks li {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .85rem; line-height: 1.4;
+    }
+    .tier-perks li .perk-check { color: var(--lime); font-size: .85rem; }
+    .tier-perks li .perk-x { color: var(--muted); font-size: .85rem; }
+    .tier-perks li.muted { color: var(--muted); }
+
+    .tier-btn {
+      width: 100%; padding: .85rem;
+      border-radius: 8px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: .88rem;
+      letter-spacing: .5px; transition: all .2s;
+      border: none;
+    }
+    .tier-btn.outline {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .tier-btn.outline:hover { border-color: var(--lime); color: var(--lime); }
+    .tier-btn.solid {
+      background: var(--lime); color: #000;
+    }
+    .tier-btn.solid:hover { background: #d9ff3a; transform: translateY(-1px); }
+
+    /* ── FAQ ── */
+    .faq-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 0; cursor: pointer;
+      font-weight: 600; font-size: .95rem;
+      transition: color .2s; gap: 1rem;
+      user-select: none;
+    }
+    .faq-q:hover { color: var(--lime); }
+    .faq-arrow {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; color: var(--muted);
+      transition: transform .3s, background .3s, border-color .3s;
+    }
+    .faq-item.open .faq-arrow {
+      transform: rotate(45deg);
+      background: rgba(200,241,53,.1);
+      border-color: rgba(200,241,53,.3);
+      color: var(--lime);
+    }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .4s ease, padding .3s ease;
+    }
+    .faq-a-inner { padding: 0 0 1.4rem; color: var(--muted); font-size: .9rem; line-height: 1.75; }
+    .faq-item.open .faq-a { max-height: 200px; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      margin: 2rem 3rem 6rem;
+      background: var(--lime);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 3.5rem 4rem;
+      position: relative; overflow: hidden;
+      gap: 2rem; flex-wrap: wrap;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.06);
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      right: 60px; bottom: -60px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.05);
+    }
+    .cta-left { position: relative; z-index: 1; }
+    .cta-eyebrow {
+      font-size: .72rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(0,0,0,.5);
+      margin-bottom: .5rem;
+    }
+    .cta-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 2px; color: #000; line-height: 1.05;
+    }
+    .cta-right {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .cta-btn-dark {
+      background: #000; color: var(--lime);
+      border: none; border-radius: 8px;
+      padding: .9rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: .9rem;
+      cursor: pointer; transition: background .2s, transform .15s;
+      white-space: nowrap;
+    }
+    .cta-btn-dark:hover { background: #111; transform: translateY(-2px); }
+    .cta-btn-ghost {
+      background: rgba(0,0,0,.1); color: #000;
+      border: 1px solid rgba(0,0,0,.2); border-radius: 8px;
+      padding: .9rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: .9rem;
+      cursor: pointer; transition: background .2s;
+      white-space: nowrap;
+    }
+    .cta-btn-ghost:hover { background: rgba(0,0,0,.18); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem; letter-spacing: 4px; color: var(--lime);
+    }
+    .footer-logo span { color: var(--muted); }
+    footer p { font-size: .75rem; color: var(--muted); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(6px);
+      z-index: 800;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+      padding: 1.5rem;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: min(500px, 100%);
+      padding: 2.5rem;
+      transform: translateY(20px) scale(.97);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+    }
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+    .modal-head {
+      display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;
+    }
+    .modal-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem; letter-spacing: 2px; line-height: 1;
+    }
+    .modal-close {
+      background: none; border: 1px solid var(--border);
+      color: var(--muted); border-radius: 6px;
+      width: 32px; height: 32px; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: .78rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; background: #0f0f0f;
+      border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem; padding: .7rem 1rem;
+      outline: none; transition: border-color .2s;
+      resize: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--lime); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .modal-submit {
+      width: 100%; background: var(--lime); color: #000;
+      border: none; border-radius: 8px; padding: .9rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: .95rem; cursor: pointer;
+      margin-top: 1rem; transition: background .2s;
+    }
+    .modal-submit:hover { background: #d9ff3a; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--lime); color: #000;
+      font-weight: 700; font-size: .85rem;
+      padding: .65rem 1.5rem; border-radius: 100px;
+      z-index: 9000; transition: transform .35s ease;
+      white-space: nowrap; pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-card:nth-child(2n) { border-right: none; }
+      .service-card:nth-child(3n) { border-right: 1px solid var(--border); }
+      .service-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .process-track { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+      .process-track::before { display: none; }
+      .tiers-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-band { grid-template-columns: 1fr; }
+      .fb-visual { min-height: 260px; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .section { padding: 4rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; border: none; gap: 1px; }
+      .service-card { border: 1px solid var(--border) !important; border-radius: 10px; margin-bottom: .5rem; }
+      .tiers-grid { grid-template-columns: 1fr; }
+      .process-track { grid-template-columns: 1fr 1fr; }
+      .cta-banner { padding: 2rem; margin: 1rem 1.5rem 4rem; }
+      .stats-strip { flex-wrap: wrap; }
+      .stat { min-width: 50%; }
+      .stat:nth-child(2) { border-right: none; }
+      footer { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">KICK<span>OFF</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Shop</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="#">Clubs</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <a href="index.html" class="nav-cta">Shop Now →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb"></div>
+  <span class="hero-eyebrow">What We Offer</span>
+  <h1>OUR<br/><span class="outline">SERVICES</span><br/><span class="fill">&</span> MORE</h1>
+  <p class="hero-sub">From expert kit customisation to elite training consultancy — KICKOFF is your end-to-end football destination.</p>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat">
+    <span class="stat-num" data-target="50000">0</span>
+    <span class="stat-label">Happy Customers</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" data-target="120">0</span>
+    <span class="stat-label">Club Partnerships</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" data-target="98">0</span>
+    <span class="stat-label">% Satisfaction Rate</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" data-target="24">0</span>
+    <span class="stat-label">Hr Support</span>
+  </div>
+</div>
+
+<!-- CORE SERVICES GRID -->
+<section class="section">
+  <p class="section-eyebrow">What We Do</p>
+  <h2 class="section-title">CORE <span>SERVICES</span></h2>
+  <p class="section-desc">Every service is built around one goal — making you perform better on and off the pitch.</p>
+
+  <div class="services-grid" id="servicesGrid">
+
+    <div class="service-card" onmousemove="trackMouse(event,this)">
+      <div class="sc-icon">⚡</div>
+      <span class="sc-tag">Express</span>
+      <div class="sc-title">Same-Day Delivery</div>
+      <p class="sc-desc">Order by 2 PM and receive your gear at your doorstep before game day. Available in 20+ cities across India.</p>
+      <ul class="sc-features">
+        <li>Real-time order tracking</li>
+        <li>Secure tamper-proof packaging</li>
+        <li>Free for orders over ₹2,000</li>
+      </ul>
+      <a href="#" class="sc-link">Learn more →</a>
+    </div>
+
+    <div class="service-card" onmousemove="trackMouse(event,this)">
+      <div class="sc-icon">🎨</div>
+      <span class="sc-tag">Custom</span>
+      <div class="sc-title">Kit Customisation</div>
+      <p class="sc-desc">Name, number, badge — make it yours. Professional heat-press and embroidery on any jersey in our catalogue.</p>
+      <ul class="sc-features">
+        <li>7 font styles available</li>
+        <li>Full-team bulk orders</li>
+        <li>48-hour turnaround</li>
+      </ul>
+      <a href="#" class="sc-link" onclick="openModal('customise'); return false;">Get a quote →</a>
+    </div>
+
+    <div class="service-card" onmousemove="trackMouse(event,this)">
+      <div class="sc-icon">🧪</div>
+      <span class="sc-tag">Pro</span>
+      <div class="sc-title">Boot Fitting Lab</div>
+      <p class="sc-desc">Not all boots are made equal. Our in-store & virtual boot fitting sessions match your foot type to the perfect cleat.</p>
+      <ul class="sc-features">
+        <li>3D foot scan (in-store)</li>
+        <li>Gait & play-style analysis</li>
+        <li>Try-before-you-buy policy</li>
+      </ul>
+      <a href="#" class="sc-link" onclick="openModal('bootfit'); return false;">Book a session →</a>
+    </div>
+
+    <div class="service-card" onmousemove="trackMouse(event,this)">
+      <div class="sc-icon">🏆</div>
+      <span class="sc-tag">Club</span>
+      <div class="sc-title">Team & Club Kits</div>
+      <p class="sc-desc">Outfit your entire squad from grassroots to semi-pro. Bulk pricing, sponsorship badge placement, and dedicated account managers.</p>
+      <ul class="sc-features">
+        <li>Min. order: 10 units</li>
+        <li>Custom sub-design included</li>
+        <li>Dedicated account manager</li>
+      </ul>
+      <a href="#" class="sc-link" onclick="openModal('team'); return false;">Request a kit →</a>
+    </div>
+
+    <div class="service-card" onmousemove="trackMouse(event,this)">
+      <div class="sc-icon">🔧</div>
+      <span class="sc-tag">Care</span>
+      <div class="sc-title">Gear Maintenance</div>
+      <p class="sc-desc">Extend the life of your equipment. Deep cleaning, sole replacement, stud servicing, and re-stitching by certified technicians.</p>
+      <ul class="sc-features">
+        <li>Boot resoling & stud swap</li>
+        <li>GK glove re-gripping</li>
+        <li>Jersey repairs & reprints</li>
+      </ul>
+      <a href="#" class="sc-link" onclick="openModal('repair'); return false;">Book repair →</a>
+    </div>
+
+    <div class="service-card" onmousemove="trackMouse(event,this)">
+      <div class="sc-icon">📦</div>
+      <span class="sc-tag">Flex</span>
+      <div class="sc-title">Subscription Box</div>
+      <p class="sc-desc">Monthly or quarterly curated boxes packed with training essentials, nutrition samples, and exclusive member-only gear drops.</p>
+      <ul class="sc-features">
+        <li>Personalised to your position</li>
+        <li>Skip or pause anytime</li>
+        <li>₹1,299 / month onwards</li>
+      </ul>
+      <a href="#" class="sc-link" onclick="setTab('membership');">View plans →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURED: VIRTUAL FITTING -->
+<section class="section" style="padding-top:0">
+  <p class="section-eyebrow">Featured Service</p>
+  <h2 class="section-title">VIRTUAL <span>FITTING ROOM</span></h2>
+  <div class="feature-band">
+    <div class="fb-left">
+      <p style="color:var(--muted);font-size:.95rem;line-height:1.75;">Our AI-powered virtual fitting room lets you see how boots and jerseys look and fit before you buy — reducing returns and saving you time.</p>
+      <ul class="fb-check-list">
+        <li><span class="check">✓</span>Upload a photo or use your phone camera live</li>
+        <li><span class="check">✓</span>AI size recommendation based on your foot measurements</li>
+        <li><span class="check">✓</span>360° product view with real stitch detail</li>
+        <li><span class="check">✓</span>Compare up to 3 items side by side</li>
+        <li><span class="check">✓</span>Instant add-to-cart from the fitting room</li>
+      </ul>
+      <button class="btn-primary" style="background:var(--lime);color:#000;border:none;border-radius:8px;padding:.85rem 2rem;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;width:fit-content;" onclick="showToast('🚀 Virtual Fitting Room — launching soon!')">Try It Free →</button>
+    </div>
+    <div class="fb-visual">
+      <div class="fb-pitch">
+        <div class="fb-goal left"></div>
+        <div class="fb-goal right"></div>
+        <span style="font-size:3rem;z-index:1;filter:drop-shadow(0 0 20px rgba(200,241,53,.4))">⚽</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section process-section" id="process">
+  <p class="section-eyebrow">How It Works</p>
+  <h2 class="section-title">FROM ORDER<br/><span>TO PITCH</span></h2>
+  <div class="process-track">
+    <div class="process-step">
+      <div class="ps-num">01</div>
+      <div class="ps-icon">🛒</div>
+      <div class="ps-title">Browse & Choose</div>
+      <p class="ps-desc">Explore 500+ products filtered by position, brand, and budget.</p>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">02</div>
+      <div class="ps-icon">🎨</div>
+      <div class="ps-title">Customise</div>
+      <p class="ps-desc">Add name, number, or club badge with our live preview tool.</p>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">03</div>
+      <div class="ps-icon">✅</div>
+      <div class="ps-title">Confirm & Pay</div>
+      <p class="ps-desc">Secure checkout with UPI, cards, and EMI options available.</p>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">04</div>
+      <div class="ps-icon">📦</div>
+      <div class="ps-title">We Pack & Ship</div>
+      <p class="ps-desc">Quality-checked, eco-packed, and dispatched within 24 hours.</p>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">05</div>
+      <div class="ps-icon">⚽</div>
+      <div class="ps-title">Hit the Pitch</div>
+      <p class="ps-desc">Receive, wear, and play. Returns accepted within 30 days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP TIERS -->
+<section class="section" id="membership">
+  <p class="section-eyebrow">Membership</p>
+  <h2 class="section-title">PICK YOUR <span>PLAN</span></h2>
+  <p class="section-desc">Join the KICKOFF Club and unlock exclusive discounts, early access drops, and premium perks year-round.</p>
+  <div class="tiers-grid">
+
+    <div class="tier-card">
+      <div class="tier-icon">⚽</div>
+      <div class="tier-name">Starter</div>
+      <div class="tier-price">Free<sub></sub></div>
+      <div class="tier-cycle">No card required</div>
+      <ul class="tier-perks">
+        <li><span class="perk-check">✓</span> Standard shipping rates</li>
+        <li><span class="perk-check">✓</span> Wishlist & order tracking</li>
+        <li><span class="perk-check">✓</span> Email support</li>
+        <li class="muted"><span class="perk-x">✕</span> Early access to drops</li>
+        <li class="muted"><span class="perk-x">✕</span> Member-only discounts</li>
+        <li class="muted"><span class="perk-x">✕</span> Free customisation</li>
+      </ul>
+      <button class="tier-btn outline" onclick="showToast('✅ You\'re already on Starter — sign in to upgrade!')">Current Plan</button>
+    </div>
+
+    <div class="tier-card featured">
+      <div class="tier-icon">🏅</div>
+      <div class="tier-name">Pro</div>
+      <div class="tier-price">₹499<sub> / mo</sub></div>
+      <div class="tier-cycle">Billed monthly • Cancel anytime</div>
+      <ul class="tier-perks">
+        <li><span class="perk-check">✓</span> Free delivery on all orders</li>
+        <li><span class="perk-check">✓</span> 10% off sitewide</li>
+        <li><span class="perk-check">✓</span> 48-hr early access drops</li>
+        <li><span class="perk-check">✓</span> Priority chat support</li>
+        <li><span class="perk-check">✓</span> 1 free customisation/month</li>
+        <li class="muted"><span class="perk-x">✕</span> Dedicated account manager</li>
+      </ul>
+      <button class="tier-btn solid" onclick="openModal('subscribe')">Get Pro →</button>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-icon">🏆</div>
+      <div class="tier-name">Elite</div>
+      <div class="tier-price">₹999<sub> / mo</sub></div>
+      <div class="tier-cycle">Billed monthly • Cancel anytime</div>
+      <ul class="tier-perks">
+        <li><span class="perk-check">✓</span> Everything in Pro</li>
+        <li><span class="perk-check">✓</span> 20% off sitewide</li>
+        <li><span class="perk-check">✓</span> Exclusive Elite drops</li>
+        <li><span class="perk-check">✓</span> Dedicated account manager</li>
+        <li><span class="perk-check">✓</span> Quarterly subscription box</li>
+        <li><span class="perk-check">✓</span> VIP boot fitting session</li>
+      </ul>
+      <button class="tier-btn outline" onclick="openModal('subscribe')">Get Elite →</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="padding-top:0">
+  <p class="section-eyebrow">FAQ</p>
+  <h2 class="section-title">GOT <span>QUESTIONS?</span></h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 4rem;max-width:960px">
+    <div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            How long does customisation take?
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Standard customisation (name + number) takes 48 hours. Complex designs or bulk club orders may take 5–7 business days. You'll receive a confirmation email with the exact timeline after placing your order.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Can I return a customised item?
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Customised items are non-refundable unless there is a manufacturing defect or error on our part. Please double-check your name, number, and colour selection before placing the order. Standard (non-customised) items have a 30-day return window.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Which cities have same-day delivery?
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Same-day delivery is currently available in Hyderabad, Bangalore, Mumbai, Delhi, Chennai, Pune, and Kolkata. We're expanding to 15 more cities by end of 2026. Orders must be placed by 2 PM local time.</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            How does the boot fitting session work?
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">In-store sessions include a 3D foot scan and gait analysis — takes about 25 minutes. Virtual sessions (via video call) use your measurements and playing style to recommend the best options. Both are free for Pro and Elite members.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Can I pause my membership subscription?
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Yes! Pro and Elite members can pause their subscription for up to 3 months per year without losing their tier benefits. Manage this directly from your account dashboard under "Membership Settings".</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Do you supply kits for school and college teams?
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Absolutely! We have special institutional pricing for schools, colleges, and grassroots academies. Minimum order is 10 units. Contact our team via the Club Kits service form and we'll get back within 24 hours with a custom quote.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div class="cta-left">
+    <p class="cta-eyebrow">Ready to level up?</p>
+    <div class="cta-title">GEAR UP.<br/>SHOW UP.<br/>WIN.</div>
+  </div>
+  <div class="cta-right">
+    <button class="cta-btn-dark" onclick="window.location.href='index.html'">Shop the Store →</button>
+    <button class="cta-btn-ghost" onclick="openModal('contact')">Talk to Us</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">KICK<span>OFF</span></div>
+  <p>© 2026 KICKOFF Football Store. All rights reserved.</p>
+  <p>Made for players, by players.</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">GET IN TOUCH</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── CURSOR ──
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+  function animateRing() {
+    rx += (mx - rx) * .12;
+    ry += (my - ry) * .12;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a,button,.service-card,.tier-card,.faq-q').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width='18px'; cursor.style.height='18px'; cursor.style.background='rgba(200,241,53,.5)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width='10px'; cursor.style.height='10px'; cursor.style.background='var(--lime)'; });
+  });
+
+  // ── SPOTLIGHT ON SERVICE CARDS ──
+  function trackMouse(e, el) {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100)+'%');
+    el.style.setProperty('--my', ((e.clientY-r.top)/r.height*100)+'%');
+  }
+
+  // ── COUNTER ANIMATION ──
+  function animateCounter(el) {
+    const target = +el.dataset.target;
+    const suffix = el.closest('.stat').querySelector('.stat-label').textContent.includes('%') ? '+' : (target >= 1000 ? '+' : '+');
+    let start = 0;
+    const step = Math.ceil(target / 60);
+    const timer = setInterval(() => {
+      start = Math.min(start + step, target);
+      el.textContent = (target >= 1000 ? (start/1000).toFixed(start===target?0:1)+'K' : start) + (start === target ? '+' : '');
+      if (start === target) clearInterval(timer);
+    }, 22);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); observer.unobserve(e.target); } });
+  }, { threshold: .5 });
+  document.querySelectorAll('.stat-num').forEach(el => observer.observe(el));
+
+  // ── FAQ ──
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ── MODAL ──
+  const modals = {
+    customise: {
+      title: 'KIT CUSTOMISATION',
+      body: `<div class="form-group"><label>Full Name</label><input type="text" placeholder="e.g. Rohan Kumar"/></div>
+             <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+             <div class="form-row">
+               <div class="form-group"><label>Jersey Number</label><input type="number" placeholder="e.g. 10"/></div>
+               <div class="form-group"><label>Font Style</label><select><option>Classic</option><option>Bold Block</option><option>Script</option><option>Italic</option></select></div>
+             </div>
+             <div class="form-group"><label>Special Instructions</label><textarea rows="3" placeholder="Club badge placement, sponsor logo, etc."></textarea></div>`
+    },
+    bootfit: {
+      title: 'BOOT FITTING SESSION',
+      body: `<div class="form-group"><label>Your Name</label><input type="text" placeholder="Full name"/></div>
+             <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"/></div>
+             <div class="form-row">
+               <div class="form-group"><label>Session Type</label><select><option>In-Store (Hyderabad)</option><option>Virtual (Video Call)</option></select></div>
+               <div class="form-group"><label>Preferred Date</label><input type="date"/></div>
+             </div>
+             <div class="form-group"><label>Foot Size (approx.)</label><input type="text" placeholder="e.g. UK 8 or 42 EU"/></div>`
+    },
+    team: {
+      title: 'CLUB / TEAM KIT ORDER',
+      body: `<div class="form-group"><label>Club / Team Name</label><input type="text" placeholder="e.g. FC Hyderabad Stars"/></div>
+             <div class="form-group"><label>Contact Email</label><input type="email" placeholder="manager@club.com"/></div>
+             <div class="form-row">
+               <div class="form-group"><label>Number of Players</label><input type="number" placeholder="e.g. 18"/></div>
+               <div class="form-group"><label>Budget per Kit (₹)</label><input type="number" placeholder="e.g. 2000"/></div>
+             </div>
+             <div class="form-group"><label>Design Brief</label><textarea rows="3" placeholder="Primary colour, sponsor badge, any special requirements..."></textarea></div>`
+    },
+    repair: {
+      title: 'BOOK A REPAIR',
+      body: `<div class="form-group"><label>Your Name</label><input type="text" placeholder="Full name"/></div>
+             <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+             <div class="form-group"><label>Item to Repair</label><select><option>Football Boots — Sole/Stud</option><option>Football Boots — Upper</option><option>GK Gloves — Re-grip</option><option>Jersey — Re-stitch</option><option>Jersey — Reprint Name/Number</option></select></div>
+             <div class="form-group"><label>Issue Description</label><textarea rows="3" placeholder="Describe the damage or issue..."></textarea></div>`
+    },
+    subscribe: {
+      title: 'JOIN THE CLUB',
+      body: `<div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name"/></div>
+             <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+             <div class="form-group"><label>Choose Plan</label><select><option>Pro — ₹499 / month</option><option>Elite — ₹999 / month</option></select></div>
+             <div class="form-group"><label>Payment Method</label><select><option>UPI</option><option>Credit / Debit Card</option><option>Net Banking</option></select></div>`
+    },
+    contact: {
+      title: 'TALK TO US',
+      body: `<div class="form-group"><label>Your Name</label><input type="text" placeholder="Full name"/></div>
+             <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+             <div class="form-group"><label>Subject</label><select><option>General Enquiry</option><option>Order Issue</option><option>Partnership / B2B</option><option>Press & Media</option><option>Careers</option></select></div>
+             <div class="form-group"><label>Message</label><textarea rows="4" placeholder="How can we help?"></textarea></div>`
+    }
+  };
+
+  function openModal(key) {
+    const m = modals[key];
+    if (!m) return;
+    document.getElementById('modalTitle').textContent = m.title;
+    document.getElementById('modalBody').innerHTML = m.body + `<button class="modal-submit" onclick="submitModal()">Submit Request →</button>`;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  function submitModal() {
+    closeModal();
+    showToast('✅ Request submitted! We\'ll be in touch within 24 hours.');
+  }
+
+  // ── TOAST ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ── TAB SCROLL ──
+  function setTab(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
