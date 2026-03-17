@@ -401,6 +401,7 @@ const urlCat=params.get('cat');const urlQ=params.get('q');
 if(urlCat){activeCat=urlCat;document.querySelectorAll('[name="catR"]').forEach(r=>r.checked=r.value===urlCat);document.querySelectorAll('#catChips .chip').forEach(b=>b.classList.toggle('on',b.dataset.cat===urlCat))}
 if(urlQ){document.getElementById('shopQ').value=urlQ}
 
+<script src="script.js"></script>
 renderShop();renderCart();updateBadge();
 </script>
 </body>
