@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>KICKOFF — Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#aaff00;--g2:#c8ff3a;--dark:#05050a;--surf:#0c0c14;--card:#111119;--brd:#1a1a26;--txt:#eeeef5;--mut:#4a4a60;--red:#ff3344;--nav:70px}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--txt);font-family:'Syne',sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");opacity:.45}
+.nav{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:var(--nav);background:rgba(5,5,10,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:4px;color:var(--g);text-decoration:none}.logo em{color:var(--mut);font-style:normal}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--mut);text-decoration:none;font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:color .2s;position:relative;padding-bottom:3px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--g);transition:width .25s}
+.nav-links a:hover{color:var(--txt)}.nav-links a.active{color:var(--g)}.nav-links a.active::after{width:100%}
+.nav-r{display:flex;align-items:center;gap:.75rem}
+.srch{display:flex;align-items:center;background:var(--card);border:1px solid var(--brd);border-radius:8px;overflow:hidden}
+.srch input{background:none;border:none;outline:none;padding:.5rem .85rem;color:var(--txt);font-family:'Syne',sans-serif;font-size:.82rem;width:155px}.srch input::placeholder{color:var(--mut)}
+.srch button{background:none;border:none;padding:.5rem .7rem;cursor:pointer;color:var(--mut)}.srch button:hover{color:var(--g)}
+.cart-btn{background:var(--g);color:#000;border:none;border-radius:8px;padding:.5rem 1.1rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.8rem;cursor:pointer;display:flex;align-items:center;gap:.45rem;transition:all .2s}
+.cart-btn:hover{background:var(--g2);transform:translateY(-1px)}
+.cart-btn .cnt{background:#000;color:var(--g);border-radius:100px;width:18px;height:18px;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;transition:transform .3s}
+.cart-btn .cnt.pop{transform:scale(1.6)}
+/* PAGE HERO */
+.phero{background:var(--surf);border-bottom:1px solid var(--brd);padding:2.75rem 2.5rem 2rem}
+.breadcrumb{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--mut);margin-bottom:.75rem}
+.breadcrumb a{color:var(--mut);text-decoration:none;transition:color .2s}.breadcrumb a:hover{color:var(--g)}
+.phero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.5rem);letter-spacing:2px}.phero h1 span{color:var(--g)}
+.phero-ctrl{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:1.25rem}
+.psrch{display:flex;align-items:center;background:var(--card);border:1px solid var(--brd);border-radius:8px;overflow:hidden}
+.psrch input{background:none;border:none;outline:none;padding:.52rem .9rem;color:var(--txt);font-family:'Syne',sans-serif;font-size:.83rem;width:220px}.psrch input::placeholder{color:var(--mut)}
+.psrch button{background:none;border:none;padding:.52rem .7rem;cursor:pointer;color:var(--mut)}.psrch button:hover{color:var(--g)}
+.ctrl-r{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap}
+.sortsel{background:var(--card);border:1px solid var(--brd);color:var(--txt);border-radius:8px;padding:.5rem .9rem;font-size:.82rem;cursor:pointer;outline:none;font-family:'Syne',sans-serif}.sortsel option{background:#1a1a22}
+.vbtns{display:flex;gap:.35rem}
+.vbtn{background:none;border:1px solid var(--brd);color:var(--mut);border-radius:6px;width:33px;height:33px;cursor:pointer;font-size:.82rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.vbtn:hover,.vbtn.on{border-color:var(--g);color:var(--g)}
+/* LAYOUT */
+.shop-layout{display:grid;grid-template-columns:240px 1fr;gap:2rem;padding:2rem 2.5rem 5rem;align-items:start}
+/* SIDEBAR */
+.sidebar{position:sticky;top:calc(var(--nav)+1rem);height:fit-content}
+.sb-blk{margin-bottom:1.85rem}
+.sb-hd{display:flex;align-items:center;justify-content:space-between;font-size:.66rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:.85rem;padding-bottom:.48rem;border-bottom:1px solid var(--brd)}
+.sb-clr{background:none;border:none;color:var(--g);cursor:pointer;font-size:.66rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-family:'Syne',sans-serif}.sb-clr:hover{text-decoration:underline}
+.sb-opt{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;cursor:pointer}
+.sb-opt input{accent-color:var(--g);width:14px;height:14px;cursor:pointer;flex-shrink:0}
+.sb-opt label{font-size:.83rem;color:var(--mut);cursor:pointer;transition:color .2s;line-height:1.3}.sb-opt:hover label{color:var(--txt)}
+.price-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.5rem}
+.price-row input{background:var(--card);border:1px solid var(--brd);border-radius:6px;color:var(--txt);font-family:'Syne',sans-serif;font-size:.82rem;padding:.42rem .6rem;width:100%;outline:none}.price-row input::placeholder{color:var(--mut)}
+/* CHIPS */
+.chips{display:flex;gap:.5rem;overflow-x:auto;scrollbar-width:none;padding-bottom:.15rem;margin-bottom:1.25rem}.chips::-webkit-scrollbar{display:none}
+.chip{background:none;border:1px solid var(--brd);color:var(--mut);border-radius:100px;padding:.32rem .95rem;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.chip:hover,.chip.on{background:var(--g);border-color:var(--g);color:#000}
+/* RESULTS */
+.res-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
+.res-info{font-size:.74rem;font-weight:700;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase}
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.pgrid.g4{grid-template-columns:repeat(4,1fr)}.pgrid.gl{grid-template-columns:1fr}
+.gl .pc{flex-direction:row}.gl .pci{width:130px;flex-shrink:0;aspect-ratio:1}.gl .pcb{padding:1.25rem}
+.gl .pcft{border-top:none;border-left:1px solid var(--brd);padding:1.25rem;flex-direction:column;align-items:flex-end;justify-content:center;gap:.75rem}
+.pc{background:var(--card);border:1px solid var(--brd);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s,box-shadow .25s;position:relative}
+.pc:hover{transform:translateY(-5px);border-color:rgba(170,255,0,.35);box-shadow:0 14px 38px rgba(0,0,0,.5)}
+.pcbdg{position:absolute;top:10px;left:10px;z-index:2;font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:.2rem .55rem;border-radius:4px}
+.pcbdg.sale{background:var(--red);color:#fff}.pcbdg.new{background:var(--g);color:#000}.pcbdg.out{background:var(--brd);color:var(--mut)}
+.pcw{position:absolute;top:10px;right:10px;z-index:2;background:rgba(0,0,0,.55);border:1px solid var(--brd);border-radius:6px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:all .2s}.pcw:hover,.pcw.on{border-color:#ff4d6d}
+.pci{aspect-ratio:1;background:#111118;display:flex;align-items:center;justify-content:center;font-size:5.5rem;user-select:none;transition:transform .35s}.pc:hover .pci{transform:scale(1.06)}
+.pcb{padding:1rem;flex:1;display:flex;flex-direction:column;gap:.28rem}
+.pcbr{font-size:.66rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g)}
+.pcn{font-weight:700;font-size:.9rem;line-height:1.3}.pcd{font-size:.76rem;color:var(--mut);line-height:1.6;margin-top:.1rem}
+.pcst{font-size:.72rem;color:#f0a500;margin-top:.12rem}.pcst span{color:var(--mut);margin-left:.2rem}
+.pcft{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-top:1px solid var(--brd)}
+.pcpr{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:1px}
+.pcpr .old{font-family:'Syne',sans-serif;font-size:.7rem;color:var(--mut);text-decoration:line-through;margin-right:.2rem;font-weight:400;vertical-align:middle}
+.pcatc{background:rgba(170,255,0,.1);border:1px solid rgba(170,255,0,.25);color:var(--g);border-radius:6px;padding:.4rem .9rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.76rem;cursor:pointer;transition:all .2s}
+.pcatc:hover{background:var(--g);color:#000;border-color:var(--g)}.pcatc:disabled{background:none;border-color:var(--brd);color:var(--mut);cursor:not-allowed}
+.nores{text-align:center;padding:4rem 2rem;color:var(--mut)}.nori{font-size:3rem;margin-bottom:1rem;opacity:.35}
+.pag{display:flex;gap:.45rem;justify-content:center;margin-top:2.5rem;flex-wrap:wrap}
+.pgbtn{background:var(--card);border:1px solid var(--brd);color:var(--mut);border-radius:6px;width:36px;height:36px;cursor:pointer;font-size:.83rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:'Syne',sans-serif}
+.pgbtn:hover,.pgbtn.on{background:var(--g);border-color:var(--g);color:#000}
+/* CART */
+.cdov{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);z-index:600;opacity:0;pointer-events:none;transition:opacity .3s}.cdov.open{opacity:1;pointer-events:all}
+.cdd{position:fixed;top:0;right:0;height:100%;width:min(400px,100vw);background:#0c0c14;border-left:1px solid var(--brd);z-index:700;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .36s cubic-bezier(.4,0,.2,1)}.cdd.open{transform:translateX(0)}
+.cdh{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.4rem;border-bottom:1px solid var(--brd);flex-shrink:0}
+.cdtit{font-family:'Bebas Neue',sans-serif;font-size:1.65rem;letter-spacing:2px}
+.cdcls{background:none;border:1px solid var(--brd);color:var(--mut);border-radius:6px;width:33px;height:33px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s}.cdcls:hover{border-color:var(--red);color:var(--red)}
+.cdis{flex:1;overflow-y:auto;padding:1rem 1.4rem;display:flex;flex-direction:column;gap:.8rem}.cdis::-webkit-scrollbar{width:3px}.cdis::-webkit-scrollbar-thumb{background:var(--brd);border-radius:3px}
+.cri{display:flex;align-items:center;gap:.85rem;background:#161620;border:1px solid var(--brd);border-radius:8px;padding:.7rem}
+.crim{width:50px;height:50px;background:#1c1c28;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0}
+.crinf{flex:1;min-width:0}.crnm{font-weight:700;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crpr{font-size:.75rem;color:var(--g);font-weight:700;margin-top:.12rem}
+.crqty{display:flex;align-items:center;gap:.35rem;flex-shrink:0}
+.qb{background:var(--brd);border:none;color:var(--txt);width:23px;height:23px;border-radius:4px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .2s}.qb:hover{background:var(--g);color:#000}
+.qv{font-weight:800;font-size:.82rem;min-width:18px;text-align:center}
+.crdel{background:none;border:none;color:var(--mut);cursor:pointer;font-size:.8rem;padding:.2rem;transition:color .2s;flex-shrink:0}.crdel:hover{color:var(--red)}
+.cdemp{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.85rem;color:var(--mut);text-align:center}.cdei{font-size:3rem;opacity:.3}
+.cdft{padding:1.2rem 1.4rem;border-top:1px solid var(--brd);flex-shrink:0;display:flex;flex-direction:column;gap:.55rem}
+.cdr{display:flex;justify-content:space-between;font-size:.83rem;color:var(--mut)}.cdr span:last-child{font-weight:700;color:var(--txt)}
+.cdr.big{font-size:1rem;font-weight:800;padding-top:.45rem;border-top:1px solid var(--brd);color:var(--txt)}.cdr.big span:last-child{color:var(--g)}
+.cdchk{background:var(--g);color:#000;border:none;border-radius:8px;padding:.85rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;cursor:pointer;width:100%;transition:background .2s,transform .14s;margin-top:.2rem}.cdchk:hover{background:var(--g2);transform:translateY(-1px)}
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);color:var(--txt);border:1px solid rgba(170,255,0,.2);font-size:.82rem;font-weight:700;padding:.65rem 1.4rem;border-radius:100px;z-index:9500;transition:transform .35s cubic-bezier(.4,0,.2,1);pointer-events:none;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.55)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.footer{border-top:1px solid var(--brd);padding:2.25rem 2.5rem}
+.fb{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}.fb .flogo{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:4px;color:var(--g);text-decoration:none}.fb .flogo em{color:var(--mut);font-style:normal}.fb p{font-size:.72rem;color:var(--mut)}
+@media(max-width:900px){.shop-layout{grid-template-columns:1fr}.sidebar{position:static}}
+@media(max-width:768px){
+  .nav{padding:0 1.25rem}.nav-links{display:none}.srch{display:none}
+  .phero{padding:2rem 1.25rem 1.5rem}.shop-layout{padding:1.5rem 1.25rem 3.5rem}
+  .pgrid{grid-template-columns:repeat(2,1fr)}.pgrid.g4{grid-template-columns:repeat(2,1fr)}.footer{padding:1.75rem 1.25rem}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html">KICK<em>OFF</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-r">
+    <div class="srch"><input type="text" id="srchIn" placeholder="Search…" oninput="applyFilters()"/><button onclick="applyFilters()">🔍</button></div>
+    <button class="cart-btn" onclick="toggleCart()">🛒 Cart <span class="cnt" id="cartCnt">0</span></button>
+  </div>
+</nav>
+<div class="phero">
+  <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Products</span></div>
+  <h1>THE <span>FULL</span> COLLECTION</h1>
+  <div class="phero-ctrl">
+    <div class="psrch"><input type="text" id="shopQ" placeholder="Search all 32 products…" oninput="applyFilters()"/><button>🔍</button></div>
+    <div class="ctrl-r">
+      <select class="sortsel" id="sortSel" onchange="applyFilters()">
+        <option value="default">Sort: Featured</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+        <option value="rating">Top Rated</option>
+        <option value="name">Name A–Z</option>
+      </select>
+      <div class="vbtns">
+        <button class="vbtn" title="4 col" onclick="setView('g4',this)">⊞</button>
+        <button class="vbtn on" title="3 col" onclick="setView('',this)">⊟</button>
+        <button class="vbtn" title="List" onclick="setView('gl',this)">☰</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="shop-layout">
+  <aside class="sidebar" id="sidebar">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><span style="font-weight:800;font-size:.88rem">Filters</span><button class="sb-clr" onclick="clearAll()">Clear All</button></div>
+    <div class="sb-blk"><div class="sb-hd">Category</div><div id="sbCats"></div></div>
+    <div class="sb-blk"><div class="sb-hd">Brand</div><div id="sbBrands"></div></div>
+    <div class="sb-blk"><div class="sb-hd">Price Range (₹)</div><div class="price-row"><input type="number" id="minP" placeholder="Min" oninput="applyFilters()"/><input type="number" id="maxP" placeholder="Max" oninput="applyFilters()"/></div></div>
+    <div class="sb-blk"><div class="sb-hd">Availability</div><label class="sb-opt"><input type="checkbox" id="stockCb" onchange="applyFilters()"/><label>In Stock Only</label></label></div>
+    <div class="sb-blk"><div class="sb-hd">Deals</div><label class="sb-opt"><input type="checkbox" id="saleCb" onchange="applyFilters()"/><label>Sale Items Only</label></label></div>
+  </aside>
+  <main>
+    <div class="chips" id="catChips"></div>
+    <div class="res-bar"><span class="res-info" id="resInfo">Loading…</span></div>
+    <div class="pgrid" id="shopGrid"></div>
+    <div id="noRes" class="nores" style="display:none"><div class="nori">🔍</div><p>No products match your filters.</p><button onclick="clearAll()" style="background:none;border:1px solid var(--brd);color:var(--txt);border-radius:8px;padding:.55rem 1.25rem;font-family:'Syne',sans-serif;font-size:.82rem;cursor:pointer;margin-top:1rem">Clear Filters</button></div>
+    <div class="pag" id="pagEl"></div>
+  </main>
+</div>
+<footer class="footer"><div class="fb"><a class="flogo" href="index.html">KICK<em>OFF</em></a><p>© 2026 KICKOFF Football Store. All rights reserved.</p><p>🇮🇳 Made for players — Hyderabad, India</p></div></footer>
+<div class="cdov" id="cdov" onclick="toggleCart()"></div>
+<aside class="cdd" id="cdd">
+  <div class="cdh"><span class="cdtit">YOUR CART</span><button class="cdcls" onclick="toggleCart()">✕</button></div>
+  <div class="cdis" id="cdis"></div>
+  <div class="cdft" id="cdft" style="display:none">
+    <div class="cdr"><span>Subtotal</span><span id="cdsub">₹0</span></div>
+    <div class="cdr"><span>Delivery</span><span style="color:var(--g)">Free</span></div>
+    <div class="cdr big"><span>Total</span><span id="cdtot">₹0</span></div>
+    <button class="cdchk" onclick="checkout()">Proceed to Checkout →</button>
+    <button onclick="toggleCart()" style="background:none;border:1px solid var(--brd);color:var(--txt);border-radius:8px;padding:.55rem;font-family:'Syne',sans-serif;font-size:.82rem;cursor:pointer;width:100%;text-align:center;margin-top:.35rem">Continue Shopping</button>
+  </div>
+</aside>
+<div id="toast"></div>
+<script>
+// ══ PRODUCT DATA — embedded ══
+var PRODUCTS=[
+  {id:1,name:'Phantom GX Elite',brand:'Nike',cat:'boots',price:14999,old:17999,emoji:'👟',badge:'SALE',desc:'Speed plate and flyknit upper for explosive pace.',rating:4.8,rev:124,inStock:true},
+  {id:2,name:'Predator Accuracy+',brand:'Adidas',cat:'boots',price:16499,old:null,emoji:'🥾',badge:'NEW',desc:'Zone control zones with Primeknit collar.',rating:4.9,rev:88,inStock:true},
+  {id:3,name:'Superfly 9 Pro FG',brand:'Nike',cat:'boots',price:12999,old:null,emoji:'👟',badge:null,desc:'Carbon fiber sprint plate for maximum acceleration.',rating:4.7,rev:65,inStock:true},
+  {id:4,name:'Copa Pure.1 FG',brand:'Adidas',cat:'boots',price:10999,old:12500,emoji:'🥾',badge:'SALE',desc:'Kangaroo leather for the purest touch in the game.',rating:4.6,rev:42,inStock:true},
+  {id:5,name:'Future Ultimate FG',brand:'Puma',cat:'boots',price:11499,old:null,emoji:'👟',badge:null,desc:'FUZIONFIT+ compression bandage for adaptive fit.',rating:4.5,rev:31,inStock:false},
+  {id:6,name:'Mercurial Vapor 16',brand:'Nike',cat:'boots',price:9999,old:11999,emoji:'🥾',badge:'SALE',desc:'Lightweight speed boot with AeroTrac zone outsole.',rating:4.7,rev:57,inStock:true},
+  {id:7,name:'X Speedportal.1 FG',brand:'Adidas',cat:'boots',price:13499,old:null,emoji:'👟',badge:'NEW',desc:'Laceless Speedskin upper and Sprintframe outsole.',rating:4.6,rev:38,inStock:true},
+  {id:8,name:'Tiempo Legend 10',brand:'Nike',cat:'boots',price:8999,old:10500,emoji:'🥾',badge:'SALE',desc:'Full-grain leather for the ultimate touch and comfort.',rating:4.5,rev:49,inStock:true},
+  {id:9,name:'Manchester City Home',brand:'Puma',cat:'jersey',price:4499,old:5999,emoji:'👕',badge:'SALE',desc:'2024/25 official home kit. Celestial blue.',rating:4.9,rev:210,inStock:true},
+  {id:10,name:'Real Madrid Away',brand:'Adidas',cat:'jersey',price:4999,old:null,emoji:'🎽',badge:'NEW',desc:'Heat.Rdy technology in the iconic away strip.',rating:4.8,rev:187,inStock:true},
+  {id:11,name:'Brazil Home Jersey',brand:'Nike',cat:'jersey',price:3999,old:null,emoji:'👕',badge:null,desc:'Dri-FIT ADV with the iconic Canarinho crest.',rating:4.7,rev:145,inStock:true},
+  {id:12,name:'Arsenal Third Kit',brand:'Adidas',cat:'jersey',price:4299,old:4999,emoji:'🎽',badge:'SALE',desc:'Gold-and-navy colourway for the Gunners.',rating:4.6,rev:98,inStock:true},
+  {id:13,name:'Inter Milan Home',brand:'Nike',cat:'jersey',price:4799,old:null,emoji:'👕',badge:'NEW',desc:'Classic black and blue with authentic badge.',rating:4.8,rev:76,inStock:true},
+  {id:14,name:'PSG Fourth Kit',brand:'Nike',cat:'jersey',price:5299,old:5999,emoji:'🎽',badge:'SALE',desc:'Limited edition Jordan x PSG fourth kit.',rating:4.9,rev:134,inStock:true},
+  {id:15,name:'Borussia Dortmund',brand:'Puma',cat:'jersey',price:3799,old:null,emoji:'👕',badge:null,desc:'Iconic yellow and black home strip.',rating:4.5,rev:62,inStock:true},
+  {id:16,name:'UCL Match Ball',brand:'Adidas',cat:'ball',price:2999,old:3499,emoji:'⚽',badge:'SALE',desc:'FIFA Quality Pro for Champions League.',rating:4.9,rev:302,inStock:true},
+  {id:17,name:'Premier League Ball',brand:'Nike',cat:'ball',price:1999,old:null,emoji:'⚽',badge:null,desc:'Aerowsculpt tech for accurate trajectory.',rating:4.7,rev:189,inStock:true},
+  {id:18,name:'La Liga Orbita',brand:'Puma',cat:'ball',price:2499,old:2999,emoji:'⚽',badge:'SALE',desc:'Official La Liga match ball.',rating:4.8,rev:134,inStock:true},
+  {id:19,name:'Bundesliga Brillant',brand:'Derbystar',cat:'ball',price:1799,old:null,emoji:'⚽',badge:'NEW',desc:'Official match ball of the Bundesliga.',rating:4.6,rev:88,inStock:true},
+  {id:20,name:'Street Football Pro',brand:'Adidas',cat:'ball',price:999,old:1299,emoji:'⚽',badge:'SALE',desc:'Durable TPU shell for street play.',rating:4.4,rev:156,inStock:true},
+  {id:21,name:'Vapor Grip3 GK Pro',brand:'Nike',cat:'gloves',price:2499,old:null,emoji:'🧤',badge:'NEW',desc:'Gunn Cut with 4mm GK Contact Foam.',rating:4.8,rev:67,inStock:true},
+  {id:22,name:'Predator GL Pro',brand:'Adidas',cat:'gloves',price:1799,old:2299,emoji:'🧤',badge:'SALE',desc:'URG 3.0 grip palm for ball control.',rating:4.6,rev:45,inStock:true},
+  {id:23,name:'Future Ultimate GK',brand:'Puma',cat:'gloves',price:2199,old:null,emoji:'🧤',badge:null,desc:'GKfit wrist strap for secure lockdown.',rating:4.5,rev:32,inStock:true},
+  {id:24,name:'Pro Training Kit',brand:'Puma',cat:'training',price:3299,old:null,emoji:'🏋️',badge:null,desc:'Moisture-wicking set for intense sessions.',rating:4.5,rev:38,inStock:true},
+  {id:25,name:'Agility Ladder Pro',brand:'Generic',cat:'training',price:799,old:999,emoji:'🪜',badge:'SALE',desc:'12-rung flat ladder for footwork drills.',rating:4.4,rev:52,inStock:true},
+  {id:26,name:'Resistance Band Set',brand:'Generic',cat:'training',price:599,old:null,emoji:'💪',badge:null,desc:'5 progressive bands for lower body strength.',rating:4.3,rev:41,inStock:true},
+  {id:27,name:'GK Training Set',brand:'Puma',cat:'training',price:4499,old:null,emoji:'🥅',badge:'NEW',desc:'Complete GK set with cones and rebounders.',rating:4.6,rev:27,inStock:true},
+  {id:28,name:'Elite Backpack 45L',brand:'Adidas',cat:'accessories',price:2199,old:2799,emoji:'🎒',badge:'SALE',desc:'Boot compartment, laptop sleeve, 45L body.',rating:4.7,rev:91,inStock:true},
+  {id:29,name:'Shin Guard Pro',brand:'Nike',cat:'accessories',price:699,old:null,emoji:'🦺',badge:null,desc:'Anatomical shin guard with grip sleeve.',rating:4.5,rev:63,inStock:true},
+  {id:30,name:'Water Bottle Pro 1L',brand:'Generic',cat:'accessories',price:499,old:699,emoji:'💧',badge:'SALE',desc:'Insulated leak-proof pitch bottle.',rating:4.3,rev:44,inStock:true},
+  {id:31,name:'Grip Socks Elite',brand:'Nike',cat:'accessories',price:399,old:null,emoji:'🧦',badge:'NEW',desc:'Anti-slip grip socks for better boot feel.',rating:4.6,rev:118,inStock:true},
+  {id:32,name:'Captain Armband Set',brand:'Adidas',cat:'accessories',price:249,old:349,emoji:'💛',badge:'SALE',desc:'Elastic velcro armband in 6 colours.',rating:4.2,rev:77,inStock:true}
+];
+var CATS_DEF=[{key:'all',label:'All'},{key:'boots',label:'Boots'},{key:'jersey',label:'Jerseys'},{key:'ball',label:'Balls'},{key:'gloves',label:'Gloves'},{key:'training',label:'Training'},{key:'accessories',label:'Accessories'}];
+var PER=9,page=1,activeCat='all';
+// ══ CART ══
+var cart=JSON.parse(localStorage.getItem('ko_cart')||'[]');
+var wish=JSON.parse(localStorage.getItem('ko_wish')||'[]');
+function saveCart(){localStorage.setItem('ko_cart',JSON.stringify(cart));updateBadge();renderCart()}
+function saveWish(){localStorage.setItem('ko_wish',JSON.stringify(wish))}
+function addCart(id,qty){qty=qty||1;var p=PRODUCTS.find(function(x){return x.id===id});if(!p||!p.inStock)return;var e=cart.find(function(x){return x.id===id});if(e){e.qty+=qty}else{cart.push(Object.assign({},p,{qty:qty}))}saveCart();showToast(p.emoji+' <b>'+p.name+'</b> added!');popBadge()}
+function remCart(id){cart=cart.filter(function(x){return x.id!==id});saveCart()}
+function chgQty(id,d){var i=cart.find(function(x){return x.id===id});if(!i)return;i.qty=Math.max(0,i.qty+d);if(i.qty===0)remCart(id);else saveCart()}
+function cartTotal(){return cart.reduce(function(s,i){return s+i.price*i.qty},0)}
+function cartCount(){return cart.reduce(function(s,i){return s+i.qty},0)}
+function toggleWish(id,btn){var i=wish.indexOf(id);if(i>-1)wish.splice(i,1);else wish.push(id);saveWish();btn.textContent=wish.indexOf(id)>-1?'❤️':'🤍';btn.classList.toggle('on',wish.indexOf(id)>-1);showToast(wish.indexOf(id)>-1?'❤️ Wishlisted':'Removed from wishlist')}
+function updateBadge(){var el=document.getElementById('cartCnt');if(el)el.textContent=cartCount()}
+function popBadge(){var e=document.getElementById('cartCnt');if(!e)return;e.classList.add('pop');setTimeout(function(){e.classList.remove('pop')},360)}
+function renderCart(){
+  var items=document.getElementById('cdis'),foot=document.getElementById('cdft');
+  if(!items)return;updateBadge();
+  if(!cart.length){items.innerHTML='<div class="cdemp"><div class="cdei">🛒</div><p>Your cart is empty</p></div>';foot.style.display='none';return}
+  var html='';
+  cart.forEach(function(i){html+='<div class="cri"><div class="crim">'+i.emoji+'</div><div class="crinf"><div class="crnm">'+i.name+'</div><div class="crpr">₹'+(i.price*i.qty).toLocaleString()+'</div></div><div class="crqty"><button class="qb" onclick="chgQty('+i.id+',-1)">−</button><span class="qv">'+i.qty+'</span><button class="qb" onclick="chgQty('+i.id+',1)">+</button></div><button class="crdel" onclick="remCart('+i.id+')">✕</button></div>'});
+  items.innerHTML=html;
+  var t=cartTotal();document.getElementById('cdsub').textContent='₹'+t.toLocaleString();document.getElementById('cdtot').textContent='₹'+t.toLocaleString();foot.style.display='flex'
+}
+function toggleCart(){document.getElementById('cdd').classList.toggle('open');document.getElementById('cdov').classList.toggle('open');document.body.style.overflow=document.getElementById('cdd').classList.contains('open')?'hidden':'';renderCart()}
+function checkout(){showToast('✅ Order placed! Total: ₹'+cartTotal().toLocaleString());cart=[];saveCart();setTimeout(toggleCart,500)}
+var _tt;function showToast(html){var t=document.getElementById('toast');t.innerHTML=html;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(function(){t.classList.remove('show')},2700)}
+function pCard(p){
+  var w=wish.indexOf(p.id)>-1;
+  var stars='';for(var i=0;i<Math.floor(p.rating);i++)stars+='★';for(var i=0;i<5-Math.floor(p.rating);i++)stars+='☆';
+  return '<div class="pc">'+
+    (p.badge?'<span class="pcbdg '+p.badge.toLowerCase()+'">'+p.badge+'</span>':'')+
+    (!p.inStock?'<span class="pcbdg out">SOLD OUT</span>':'')+
+    '<button class="pcw '+(w?'on':'')+'" onclick="toggleWish('+p.id+',this)">'+(w?'❤️':'🤍')+'</button>'+
+    '<div class="pci">'+p.emoji+'</div>'+
+    '<div class="pcb"><span class="pcbr">'+p.brand+'</span><div class="pcn">'+p.name+'</div>'+
+    '<p class="pcd">'+p.desc.substring(0,58)+'…</p>'+
+    '<div class="pcst">'+stars+'<span>('+p.rev+')</span></div></div>'+
+    '<div class="pcft"><div class="pcpr">'+(p.old?'<span class="old">₹'+p.old.toLocaleString()+'</span>':'')+' ₹'+p.price.toLocaleString()+'</div>'+
+    '<button class="pcatc"'+(p.inStock?'':' disabled')+' onclick="addCart('+p.id+')">'+(p.inStock?'+ Cart':'Sold Out')+'</button></div></div>'
+}
+// ══ BUILD SIDEBAR ══
+(function(){
+  var sc=document.getElementById('sbCats');
+  CATS_DEF.forEach(function(c){sc.innerHTML+='<label class="sb-opt"><input type="radio" name="catR" value="'+c.key+'" '+(c.key==='all'?'checked':'')+' onchange="activeCat=this.value;applyFilters()"/><label>'+c.label+'</label></label>'});
+  var brands=[];PRODUCTS.forEach(function(p){if(brands.indexOf(p.brand)===-1)brands.push(p.brand)});
+  var sb=document.getElementById('sbBrands');
+  brands.forEach(function(b){sb.innerHTML+='<label class="sb-opt"><input type="checkbox" class="brCb" value="'+b+'" onchange="applyFilters()"/><label>'+b+'</label></label>'});
+  var ccEl=document.getElementById('catChips');
+  CATS_DEF.forEach(function(c){
+    var btn=document.createElement('button');btn.className='chip'+(c.key==='all'?' on':'');btn.textContent=c.label;btn.dataset.cat=c.key;
+    btn.onclick=function(){activeCat=c.key;document.querySelectorAll('[name="catR"]').forEach(function(r){r.checked=r.value===c.key});document.querySelectorAll('#catChips .chip').forEach(function(b){b.classList.toggle('on',b.dataset.cat===c.key)});applyFilters()};
+    ccEl.appendChild(btn)
+  });
+  // URL params
+  var params=new URLSearchParams(location.search);
+  var urlCat=params.get('cat'),urlQ=params.get('q');
+  if(urlCat){activeCat=urlCat;document.querySelectorAll('[name="catR"]').forEach(function(r){r.checked=r.value===urlCat});document.querySelectorAll('#catChips .chip').forEach(function(b){b.classList.toggle('on',b.dataset.cat===urlCat)})}
+  if(urlQ){document.getElementById('shopQ').value=urlQ;document.getElementById('srchIn').value=urlQ}
+})();
+function getFiltered(){
+  var q=(document.getElementById('shopQ').value||document.getElementById('srchIn').value||'').toLowerCase();
+  var sort=document.getElementById('sortSel').value;
+  var minP=parseFloat(document.getElementById('minP').value)||0;
+  var maxP=parseFloat(document.getElementById('maxP').value)||Infinity;
+  var stk=document.getElementById('stockCb').checked;
+  var sal=document.getElementById('saleCb').checked;
+  var selBr=[];document.querySelectorAll('.brCb:checked').forEach(function(c){selBr.push(c.value)});
+  var list=PRODUCTS.filter(function(p){
+    if(activeCat!=='all'&&p.cat!==activeCat)return false;
+    if(q&&p.name.toLowerCase().indexOf(q)===-1&&p.brand.toLowerCase().indexOf(q)===-1&&p.desc.toLowerCase().indexOf(q)===-1)return false;
+    if(p.price<minP||p.price>maxP)return false;
+    if(stk&&!p.inStock)return false;
+    if(sal&&!p.old)return false;
+    if(selBr.length&&selBr.indexOf(p.brand)===-1)return false;
+    return true
+  });
+  if(sort==='price-asc')list.sort(function(a,b){return a.price-b.price});
+  else if(sort==='price-desc')list.sort(function(a,b){return b.price-a.price});
+  else if(sort==='rating')list.sort(function(a,b){return b.rating-a.rating});
+  else if(sort==='name')list.sort(function(a,b){return a.name.localeCompare(b.name)});
+  return list
+}
+function applyFilters(){page=1;renderShop()}
+function renderShop(){
+  var filtered=getFiltered(),total=filtered.length;
+  var paged=filtered.slice((page-1)*PER,page*PER);
+  var grid=document.getElementById('shopGrid'),noRes=document.getElementById('noRes');
+  document.getElementById('resInfo').textContent=total+' PRODUCT'+(total!==1?'S':'');
+  if(!paged.length){grid.innerHTML='';noRes.style.display='block'}
+  else{noRes.style.display='none';grid.innerHTML=paged.map(pCard).join('')}
+  renderPag(total)
+}
+function renderPag(total){
+  var pages=Math.ceil(total/PER),el=document.getElementById('pagEl');
+  if(pages<=1){el.innerHTML='';return}
+  var h='';
+  if(page>1)h+='<button class="pgbtn" onclick="goPage('+(page-1)+')">‹</button>';
+  for(var i=1;i<=pages;i++)h+='<button class="pgbtn '+(i===page?'on':'')+'" onclick="goPage('+i+')">'+i+'</button>';
+  if(page<pages)h+='<button class="pgbtn" onclick="goPage('+(page+1)+')">›</button>';
+  el.innerHTML=h
+}
+function goPage(p){page=p;renderShop();document.querySelector('main').scrollIntoView({behavior:'smooth',block:'start'})}
+function setView(v,btn){var g=document.getElementById('shopGrid');g.className='pgrid'+(v?' '+v:'');document.querySelectorAll('.vbtn').forEach(function(b){b.classList.remove('on')});btn.classList.add('on')}
+function clearAll(){
+  activeCat='all';document.getElementById('shopQ').value='';document.getElementById('srchIn').value='';
+  document.getElementById('sortSel').value='default';document.getElementById('minP').value='';document.getElementById('maxP').value='';
+  document.getElementById('stockCb').checked=false;document.getElementById('saleCb').checked=false;
+  document.querySelectorAll('.brCb').forEach(function(c){c.checked=false});
+  document.querySelectorAll('[name="catR"]').forEach(function(r){r.checked=r.value==='all'});
+  document.querySelectorAll('#catChips .chip').forEach(function(b){b.classList.toggle('on',b.dataset.cat==='all')});
+  page=1;renderShop()
+}
+renderShop();renderCart();updateBadge();
+</script>
+</body>
+</html>
