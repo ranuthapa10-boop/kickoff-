@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>KICKOFF — Premium Football Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#aaff00;--g2:#c8ff3a;--dark:#05050a;--surf:#0c0c14;--card:#111119;--brd:#1a1a26;--txt:#eeeef5;--mut:#4a4a60;--red:#ff3344;--nav:70px}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--txt);font-family:'Syne',sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");opacity:.45}
+/* NAV */
+.nav{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:var(--nav);background:rgba(5,5,10,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:4px;color:var(--g);text-decoration:none}
+.logo em{color:var(--mut);font-style:normal}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--mut);text-decoration:none;font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:color .2s;position:relative;padding-bottom:3px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--g);transition:width .25s}
+.nav-links a:hover{color:var(--txt)}.nav-links a.active{color:var(--g)}.nav-links a.active::after{width:100%}
+.nav-r{display:flex;align-items:center;gap:.75rem}
+.srch{display:flex;align-items:center;background:var(--card);border:1px solid var(--brd);border-radius:8px;overflow:hidden;transition:border-color .2s}
+.srch:focus-within{border-color:rgba(170,255,0,.35)}
+.srch input{background:none;border:none;outline:none;padding:.48rem .85rem;color:var(--txt);font-family:'Syne',sans-serif;font-size:.82rem;width:165px}
+.srch input::placeholder{color:var(--mut)}
+.srch button{background:none;border:none;padding:.48rem .7rem;cursor:pointer;color:var(--mut);font-size:.95rem;transition:color .2s}.srch button:hover{color:var(--g)}
+.cart-btn{position:relative;background:var(--g);color:#000;border:none;border-radius:8px;padding:.48rem 1.1rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.5px;cursor:pointer;display:flex;align-items:center;gap:.45rem;transition:background .2s,transform .15s}
+.cart-btn:hover{background:var(--g2);transform:translateY(-1px)}
+.cart-btn .cnt{background:#000;color:var(--g);border-radius:100px;width:18px;height:18px;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;transition:transform .3s}
+.cart-btn .cnt.pop{transform:scale(1.65)}
+/* HERO */
+.hero{min-height:calc(100vh - var(--nav));display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:5rem 2.5rem;position:relative;overflow:hidden}
+.hbg{position:absolute;inset:0;background-image:linear-gradient(rgba(170,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(170,255,0,.03) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000,transparent);pointer-events:none}
+.hglow{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:620px;height:620px;background:radial-gradient(circle,rgba(170,255,0,.07),transparent 65%);pointer-events:none}
+.hl{z-index:1}
+.htag{display:inline-flex;align-items:center;gap:.45rem;background:rgba(170,255,0,.08);border:1px solid rgba(170,255,0,.2);color:var(--g);font-size:.67rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:.3rem .9rem;border-radius:100px;margin-bottom:1.6rem;animation:up .5s ease both}
+.htag::before{content:'●';font-size:.42rem;animation:bl 1.4s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.15}}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,8.5vw,9rem);line-height:.9;letter-spacing:2px;animation:up .5s .07s ease both}
+.hero h1 .ol{-webkit-text-stroke:1.5px var(--g);color:transparent}
+.hero h1 .fl{color:var(--g)}
+.hsub{color:var(--mut);font-size:1rem;line-height:1.78;max-width:410px;margin:1.5rem 0 2.4rem;animation:up .5s .14s ease both}
+.hbtns{display:flex;gap:1rem;flex-wrap:wrap;animation:up .5s .21s ease both}
+.btn-g{background:var(--g);color:#000;border:none;border-radius:8px;padding:.8rem 2rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem}
+.btn-g:hover{background:var(--g2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(170,255,0,.2)}
+.btn-o{background:none;color:var(--txt);border:1px solid var(--brd);border-radius:8px;padding:.8rem 2rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem}
+.btn-o:hover{border-color:var(--g);color:var(--g)}
+.hnums{display:flex;gap:2rem;margin-top:2.75rem;padding-top:2.25rem;border-top:1px solid var(--brd);animation:up .5s .28s ease both;flex-wrap:wrap}
+.hn{display:flex;flex-direction:column;gap:.2rem}
+.hnv{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--g);letter-spacing:1px;line-height:1}
+.hnl{font-size:.68rem;font-weight:700;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase}
+.hr{display:flex;align-items:center;justify-content:center;z-index:1;animation:up .6s .18s ease both}
+.bw{position:relative;width:min(420px,42vw);height:min(420px,42vw)}
+.bw svg{width:100%;height:100%;animation:spin 20s linear infinite;filter:drop-shadow(0 0 52px rgba(170,255,0,.18))}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring{position:absolute;border-radius:50%;border:1px dashed rgba(170,255,0,.1)}
+.r1{inset:-28px;animation:spin 32s linear infinite reverse}
+.r2{inset:-56px;border-color:rgba(170,255,0,.05);animation:spin 48s linear infinite}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+/* MARQUEE */
+.mq{overflow:hidden;border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);padding:.82rem 0;background:var(--surf)}
+.mqt{display:flex;gap:2.5rem;width:max-content;animation:mqa 24s linear infinite}
+.mqt:hover{animation-play-state:paused}
+@keyframes mqa{to{transform:translateX(-50%)}}
+.mqi{display:flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+.mqd{color:var(--g);font-size:.4rem}
+/* SECTIONS */
+.sec{padding:5rem 2.5rem}.secsm{padding:3rem 2.5rem}
+.ey{font-size:.67rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-bottom:.7rem}
+.sech{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4.5vw,3.8rem);letter-spacing:2px;line-height:1;margin-bottom:1rem}
+.sech span{color:var(--g)}
+/* CAT */
+.catr{display:flex;gap:1rem;overflow-x:auto;margin-top:2.5rem;scrollbar-width:none;padding-bottom:.25rem}
+.catr::-webkit-scrollbar{display:none}
+.catc{flex-shrink:0;background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:1.6rem 1.2rem;display:flex;flex-direction:column;align-items:center;gap:.6rem;min-width:115px;cursor:pointer;transition:all .25s;text-decoration:none}
+.catc:hover{border-color:rgba(170,255,0,.4);background:rgba(170,255,0,.04);transform:translateY(-3px)}
+.catc .ci{font-size:2.1rem}.catc .cl{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);transition:color .2s;text-align:center}
+.catc:hover .cl{color:var(--g)}
+/* PRODUCTS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;margin-top:2rem}
+.pc{background:var(--card);border:1px solid var(--brd);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s,box-shadow .25s;position:relative}
+.pc:hover{transform:translateY(-5px);border-color:rgba(170,255,0,.35);box-shadow:0 14px 38px rgba(0,0,0,.5)}
+.pcbdg{position:absolute;top:10px;left:10px;z-index:2;font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:.2rem .55rem;border-radius:4px}
+.pcbdg.sale{background:var(--red);color:#fff}.pcbdg.new{background:var(--g);color:#000}.pcbdg.out{background:var(--brd);color:var(--mut)}
+.pcw{position:absolute;top:10px;right:10px;z-index:2;background:rgba(0,0,0,.55);border:1px solid var(--brd);border-radius:6px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:all .2s}
+.pcw:hover,.pcw.on{border-color:#ff4d6d}
+.pci{aspect-ratio:1;background:#111118;display:flex;align-items:center;justify-content:center;font-size:5.5rem;user-select:none;transition:transform .35s}
+.pc:hover .pci{transform:scale(1.06)}
+.pcb{padding:1rem;flex:1;display:flex;flex-direction:column;gap:.28rem}
+.pcbr{font-size:.66rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g)}
+.pcn{font-weight:700;font-size:.9rem;line-height:1.3}
+.pcd{font-size:.76rem;color:var(--mut);line-height:1.6;margin-top:.1rem}
+.pcst{font-size:.72rem;color:#f0a500;margin-top:.12rem}
+.pcst span{color:var(--mut);margin-left:.2rem}
+.pcft{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-top:1px solid var(--brd)}
+.pcpr{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:1px}
+.pcpr .old{font-family:'Syne',sans-serif;font-size:.7rem;color:var(--mut);text-decoration:line-through;margin-right:.2rem;font-weight:400;vertical-align:middle}
+.pcatc{background:rgba(170,255,0,.1);border:1px solid rgba(170,255,0,.25);color:var(--g);border-radius:6px;padding:.38rem .85rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.76rem;cursor:pointer;transition:all .2s}
+.pcatc:hover{background:var(--g);color:#000;border-color:var(--g)}
+.pcatc:disabled{background:none;border-color:var(--brd);color:var(--mut);cursor:not-allowed}
+/* CHIPS */
+.chips{display:flex;gap:.5rem;overflow-x:auto;scrollbar-width:none;padding-bottom:.15rem}
+.chips::-webkit-scrollbar{display:none}
+.chip{background:none;border:1px solid var(--brd);color:var(--mut);border-radius:100px;padding:.32rem .95rem;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.chip:hover,.chip.on{background:var(--g);border-color:var(--g);color:#000}
+/* DEAL */
+.deal{margin:0 2.5rem 1rem;background:var(--g);border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:3rem 3.5rem;gap:2rem;flex-wrap:wrap;position:relative;overflow:hidden}
+.deal::before{content:'';position:absolute;right:-50px;top:-50px;width:220px;height:220px;border-radius:50%;background:rgba(0,0,0,.07)}
+.deal::after{content:'';position:absolute;right:90px;bottom:-70px;width:160px;height:160px;border-radius:50%;background:rgba(0,0,0,.05)}
+.dt{position:relative;z-index:1}
+.dtag{font-size:.67rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(0,0,0,.42);margin-bottom:.3rem}
+.dh{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);color:#000;letter-spacing:2px;line-height:1.02}
+.ds{font-size:.83rem;color:rgba(0,0,0,.5);margin-top:.4rem}
+.dbtns{display:flex;gap:.75rem;position:relative;z-index:1;flex-wrap:wrap}
+.dbd{background:#000;color:var(--g);border:none;border-radius:8px;padding:.78rem 1.8rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.86rem;cursor:pointer;transition:all .2s}
+.dbd:hover{background:#111;transform:translateY(-1px)}
+.dbg{background:rgba(0,0,0,.1);color:#000;border:1px solid rgba(0,0,0,.2);border-radius:8px;padding:.78rem 1.8rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.86rem;cursor:pointer;transition:all .2s;text-decoration:none}
+.dbg:hover{background:rgba(0,0,0,.18)}
+/* TESTI */
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:1.25rem;margin-top:2.5rem}
+.tc{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:1.75rem;transition:border-color .25s}
+.tc:hover{border-color:rgba(170,255,0,.2)}
+.tct{display:flex;align-items:center;gap:.85rem;margin-bottom:1rem}
+.tcav{width:44px;height:44px;border-radius:50%;background:rgba(170,255,0,.08);border:1px solid rgba(170,255,0,.18);display:flex;align-items:center;justify-content:center;font-size:1.25rem}
+.tcn{font-weight:700;font-size:.88rem}.tcr{font-size:.7rem;color:var(--mut);margin-top:.1rem}
+.tcst{color:#f0a500;font-size:.82rem;margin-bottom:.65rem}
+.tctx{font-size:.85rem;color:#aaa;line-height:1.72;font-style:italic}
+/* NL */
+.nl{background:var(--surf);border:1px solid var(--brd);border-radius:12px;padding:4rem 3rem;text-align:center;position:relative;overflow:hidden}
+.nl::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(170,255,0,.05),transparent 70%);pointer-events:none}
+.nlf{display:flex;gap:.7rem;max-width:420px;margin:1.75rem auto 0;position:relative;z-index:1;flex-wrap:wrap}
+.nlf input{flex:1;min-width:170px;background:var(--card);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'Syne',sans-serif;font-size:.87rem;padding:.72rem 1rem;outline:none;transition:border-color .2s}
+.nlf input:focus{border-color:rgba(170,255,0,.4)}.nlf input::placeholder{color:var(--mut)}
+.nlf button{background:var(--g);color:#000;border:none;border-radius:8px;padding:.72rem 1.5rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.87rem;cursor:pointer;white-space:nowrap;transition:background .2s}
+.nlf button:hover{background:var(--g2)}
+/* CART */
+.cdov{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);z-index:600;opacity:0;pointer-events:none;transition:opacity .3s}
+.cdov.open{opacity:1;pointer-events:all}
+.cdd{position:fixed;top:0;right:0;height:100%;width:min(400px,100vw);background:#0c0c14;border-left:1px solid var(--brd);z-index:700;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .36s cubic-bezier(.4,0,.2,1)}
+.cdd.open{transform:translateX(0)}
+.cdh{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.4rem;border-bottom:1px solid var(--brd);flex-shrink:0}
+.cdtitle{font-family:'Bebas Neue',sans-serif;font-size:1.65rem;letter-spacing:2px}
+.cdcls{background:none;border:1px solid var(--brd);color:var(--mut);border-radius:6px;width:33px;height:33px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cdcls:hover{border-color:var(--red);color:var(--red)}
+.cdis{flex:1;overflow-y:auto;padding:1rem 1.4rem;display:flex;flex-direction:column;gap:.8rem}
+.cdis::-webkit-scrollbar{width:3px}.cdis::-webkit-scrollbar-thumb{background:var(--brd);border-radius:3px}
+.cri{display:flex;align-items:center;gap:.85rem;background:#161620;border:1px solid var(--brd);border-radius:8px;padding:.7rem;animation:up .25s ease}
+.crim{width:50px;height:50px;background:#1c1c28;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0}
+.crinf{flex:1;min-width:0}
+.crnm{font-weight:700;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crpr{font-size:.75rem;color:var(--g);font-weight:700;margin-top:.12rem}
+.crqty{display:flex;align-items:center;gap:.35rem;flex-shrink:0}
+.qb{background:var(--brd);border:none;color:var(--txt);width:23px;height:23px;border-radius:4px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.qb:hover{background:var(--g);color:#000}
+.qv{font-weight:800;font-size:.82rem;min-width:18px;text-align:center}
+.crdel{background:none;border:none;color:var(--mut);cursor:pointer;font-size:.8rem;padding:.2rem;transition:color .2s;flex-shrink:0}
+.crdel:hover{color:var(--red)}
+.cdemp{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.85rem;color:var(--mut);text-align:center}
+.cdei{font-size:3rem;opacity:.3}
+.cdft{padding:1.2rem 1.4rem;border-top:1px solid var(--brd);flex-shrink:0;display:flex;flex-direction:column;gap:.55rem}
+.cdr{display:flex;justify-content:space-between;font-size:.83rem;color:var(--mut)}
+.cdr span:last-child{font-weight:700;color:var(--txt)}
+.cdr.big{font-size:1rem;font-weight:800;padding-top:.45rem;border-top:1px solid var(--brd);color:var(--txt)}
+.cdr.big span:last-child{color:var(--g)}
+.cdchk{background:var(--g);color:#000;border:none;border-radius:8px;padding:.85rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;cursor:pointer;width:100%;transition:background .2s,transform .14s;margin-top:.2rem}
+.cdchk:hover{background:var(--g2);transform:translateY(-1px)}
+.cdchk:disabled{background:var(--brd);color:var(--mut);cursor:not-allowed;transform:none}
+/* TOAST */
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);color:var(--txt);border:1px solid rgba(170,255,0,.2);font-size:.82rem;font-weight:700;padding:.65rem 1.4rem;border-radius:100px;z-index:9500;transition:transform .35s cubic-bezier(.4,0,.2,1);pointer-events:none;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.55)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+/* FOOTER */
+.footer{border-top:1px solid var(--brd);padding:3.5rem 2.5rem 2rem}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
+.fg-brand .flogo{font-family:'Bebas Neue',sans-serif;font-size:1.85rem;letter-spacing:4px;color:var(--g);display:block;margin-bottom:.85rem;text-decoration:none}
+.fg-brand .flogo em{color:var(--mut);font-style:normal}
+.fg-brand p{font-size:.82rem;color:var(--mut);line-height:1.72;max-width:245px}
+.fc h4{font-size:.67rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--txt);margin-bottom:1.1rem}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.fc ul li a{color:var(--mut);text-decoration:none;font-size:.82rem;transition:color .2s}
+.fc ul li a:hover{color:var(--g)}
+.fb{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid var(--brd)}
+.fb p{font-size:.72rem;color:var(--mut)}
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding:3rem 1.25rem;gap:2.5rem}
+  .hr{order:-1}.bw{width:180px;height:180px}
+  .hnums{flex-wrap:wrap;gap:1.2rem}
+  .deal{margin:0 1.25rem;padding:2rem}
+  .fg{grid-template-columns:1fr 1fr}.fg-brand{grid-column:1/-1}
+}
+@media(max-width:768px){
+  .nav{padding:0 1.25rem}.nav-links{display:none}.srch{display:none}
+  .sec{padding:3rem 1.25rem}.secsm{padding:2rem 1.25rem}
+  .footer{padding:2.5rem 1.25rem 1.5rem}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html">KICK<em>OFF</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-r">
+    <div class="srch">
+      <input type="text" id="srchIn" placeholder="Search gear…" onkeydown="if(event.key==='Enter')goSearch()"/>
+      <button onclick="goSearch()">🔍</button>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">🛒 Cart <span class="cnt" id="cartCnt">0</span></button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hbg"></div><div class="hglow"></div>
+  <div class="hl">
+    <span class="htag">2025/26 Season Collection</span>
+    <h1>PLAY<br/><span class="ol">LIKE</span><br/><span class="fl">A LEGEND</span></h1>
+    <p class="hsub">Premium football gear for every position, every surface, every level of the beautiful game. Delivered to your door.</p>
+    <div class="hbtns">
+      <a href="products.html" class="btn-g">Shop Collection →</a>
+      <a href="contact.html" class="btn-o">Talk to Us</a>
+    </div>
+    <div class="hnums">
+      <div class="hn"><span class="hnv" data-target="32">0</span><span class="hnl">Products</span></div>
+      <div style="width:1px;background:var(--brd)"></div>
+      <div class="hn"><span class="hnv" data-target="50000">0</span><span class="hnl">Players Served</span></div>
+      <div style="width:1px;background:var(--brd)"></div>
+      <div class="hn"><span class="hnv" data-target="98">0</span><span class="hnl">% Satisfaction</span></div>
+    </div>
+  </div>
+  <div class="hr">
+    <div class="bw">
+      <div class="ring r1"></div><div class="ring r2"></div>
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="97" fill="#10101a"/>
+        <circle cx="100" cy="100" r="97" stroke="rgba(170,255,0,0.15)" stroke-width="1.5"/>
+        <polygon points="100,16 120,30 113,54 87,54 80,30" fill="#aaff00" opacity=".88"/>
+        <polygon points="168,63 181,82 164,98 143,90 143,67" fill="#1a1a28" stroke="#aaff00" stroke-width="1.2"/>
+        <polygon points="160,142 174,162 152,172 133,158 140,138" fill="#1a1a28" stroke="#aaff00" stroke-width="1.2"/>
+        <polygon points="100,175 81,162 87,139 113,139 120,162" fill="#aaff00" opacity=".68"/>
+        <polygon points="40,142 48,162 27,172 11,158 19,138" fill="#1a1a28" stroke="#aaff00" stroke-width="1.2"/>
+        <polygon points="32,63 56,67 56,90 36,98 19,82" fill="#1a1a28" stroke="#aaff00" stroke-width="1.2"/>
+        <line x1="100" y1="54" x2="143" y2="67" stroke="#aaff00" stroke-width=".6" opacity=".22"/>
+        <line x1="143" y1="90" x2="140" y2="138" stroke="#aaff00" stroke-width=".6" opacity=".22"/>
+        <line x1="120" y1="139" x2="120" y2="162" stroke="#aaff00" stroke-width=".6" opacity=".22"/>
+        <line x1="80" y1="139" x2="60" y2="138" stroke="#aaff00" stroke-width=".6" opacity=".22"/>
+        <line x1="56" y1="90" x2="80" y2="54" stroke="#aaff00" stroke-width=".6" opacity=".22"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="mq"><div class="mqt" id="mqt"></div></div>
+
+<section class="sec">
+  <p class="ey">Browse By</p>
+  <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <h2 class="sech">SHOP BY <span>CATEGORY</span></h2>
+    <a href="products.html" class="btn-o" style="font-size:.8rem;padding:.5rem 1.2rem">View All →</a>
+  </div>
+  <div class="catr" id="catRow"></div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem">
+    <div><p class="ey">Handpicked</p><h2 class="sech" style="margin:0">FEATURED <span>DROPS</span></h2></div>
+    <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+      <div class="chips" id="homeChips"></div>
+      <a href="products.html" class="btn-o" style="font-size:.8rem;padding:.5rem 1.2rem;white-space:nowrap">See All →</a>
+    </div>
+  </div>
+  <div class="pgrid" id="featGrid"></div>
+</section>
+
+<div class="deal">
+  <div class="dt">
+    <p class="dtag">🔥 Limited Time Offer</p>
+    <div class="dh">JOIN PRO. SAVE 10%<br/>ON EVERYTHING.</div>
+    <p class="ds">Free delivery + early access drops + 1 free customisation per month.</p>
+  </div>
+  <div class="dbtns">
+    <button class="dbd" onclick="showToast('🏅 Pro membership — coming soon!')">Get Pro →</button>
+    <a href="contact.html" class="dbg">Learn More</a>
+  </div>
+</div>
+
+<section class="sec">
+  <p class="ey">Social Proof</p>
+  <h2 class="sech">WHAT PLAYERS <span>SAY</span></h2>
+  <div class="tg" id="testiGrid"></div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="nl">
+    <p class="ey" style="position:relative;z-index:1">Stay In The Game</p>
+    <h2 class="sech" style="position:relative;z-index:1">GET EARLY <span>ACCESS</span></h2>
+    <p style="color:var(--mut);font-size:.93rem;line-height:1.75;max-width:380px;margin:.75rem auto 0;text-align:center;position:relative;z-index:1">Be first for new drops, exclusive deals and football content.</p>
+    <form class="nlf" onsubmit="nlSub(event)">
+      <input type="email" id="nlE" placeholder="your@email.com" required/>
+      <button type="submit">Subscribe →</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="fg">
+    <div class="fg-brand">
+      <a class="flogo" href="index.html">KICK<em>OFF</em></a>
+      <p>Premium football gear for every level. From grassroots to semi-pro — we've got your game covered.</p>
+    </div>
+    <div class="fc"><h4>Shop</h4><ul>
+      <li><a href="products.html">All Products</a></li>
+      <li><a href="products.html?cat=boots">Boots</a></li>
+      <li><a href="products.html?cat=jersey">Jerseys</a></li>
+      <li><a href="products.html?cat=ball">Balls</a></li>
+      <li><a href="products.html?cat=accessories">Accessories</a></li>
+    </ul></div>
+    <div class="fc"><h4>Help</h4><ul>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="contact.html">Order Support</a></li>
+      <li><a href="#">Shipping & Returns</a></li>
+      <li><a href="#">Size Guide</a></li>
+      <li><a href="#">Track My Order</a></li>
+    </ul></div>
+    <div class="fc"><h4>Company</h4><ul>
+      <li><a href="#">About KICKOFF</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="contact.html">Club Partnerships</a></li>
+      <li><a href="#">Press & Media</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+    </ul></div>
+  </div>
+  <div class="fb">
+    <p>© 2026 KICKOFF Football Store. All rights reserved.</p>
+    <p>🇮🇳 Made for players — Hyderabad, India</p>
+  </div>
+</footer>
+
+<div class="cdov" id="cdov" onclick="toggleCart()"></div>
+<aside class="cdd" id="cdd">
+  <div class="cdh"><span class="cdtitle">YOUR CART</span><button class="cdcls" onclick="toggleCart()">✕</button></div>
+  <div class="cdis" id="cdis"></div>
+  <div class="cdft" id="cdft" style="display:none">
+    <div class="cdr"><span>Subtotal</span><span id="cdsub">₹0</span></div>
+    <div class="cdr"><span>Delivery</span><span style="color:var(--g)">Free</span></div>
+    <div class="cdr big"><span>Total</span><span id="cdtot">₹0</span></div>
+    <button class="cdchk" onclick="checkout()">Proceed to Checkout →</button>
+    <button class="btn-o" style="width:100%;text-align:center;padding:.55rem" onclick="toggleCart()">Continue Shopping</button>
+  </div>
+</aside>
+<div id="toast"></div>
+<script src="store-data.js"></script>
+<script>
+const CATS=[{key:'all',label:'All',emoji:'🏪'},{key:'boots',label:'Boots',emoji:'⚽'},{key:'jersey',label:'Jerseys',emoji:'👕'},{key:'ball',label:'Balls',emoji:'⚽'},{key:'gloves',label:'Gloves',emoji:'🧤'},{key:'training',label:'Training',emoji:'🏋️'},{key:'accessories',label:'Accessories',emoji:'🎒'}];
+const TESTI=[
+  {name:'Arjun Mehta',role:'U-19 Striker',text:"The Phantom GX boots transformed my pace. Same-day delivery meant I had them for the district final!",av:'⚽',stars:5},
+  {name:'Priya Sharma',role:"Women's Captain",text:'Ordered custom kits for 18 players — delivered in 4 days. Quality is superb.',av:'🏆',stars:5},
+  {name:'Rahul Das',role:'GK, FC Pune',text:'The boot fitting recommendation was a game changer. Perfect GK boots for my style.',av:'🧤',stars:5},
+  {name:'Siddharth V.',role:'Football Coach',text:'Best platform for bulk club orders. The dedicated account manager made it seamless.',av:'👕',stars:5},
+];
+/* CART */
+let cart=JSON.parse(localStorage.getItem('ko_cart')||'[]');
+let wish=JSON.parse(localStorage.getItem('ko_wish')||'[]');
+function saveCart(){localStorage.setItem('ko_cart',JSON.stringify(cart));updateBadge();renderCart()}
+function saveWish(){localStorage.setItem('ko_wish',JSON.stringify(wish))}
+function addCart(id,qty=1){const p=PRODUCTS.find(x=>x.id===id);if(!p||!p.inStock)return;const e=cart.find(x=>x.id===id);e?e.qty+=qty:cart.push({...p,qty});saveCart();showToast(`${p.emoji} <b>${p.name}</b> added to cart!`);popBadge()}
+function remCart(id){cart=cart.filter(x=>x.id!==id);saveCart()}
+function chgQty(id,d){const i=cart.find(x=>x.id===id);if(!i)return;i.qty=Math.max(0,i.qty+d);if(i.qty===0)remCart(id);else saveCart()}
+function cartTotal(){return cart.reduce((s,i)=>s+i.price*i.qty,0)}
+function cartCount(){return cart.reduce((s,i)=>s+i.qty,0)}
+function toggleWish(id,btn){const i=wish.indexOf(id);i>-1?wish.splice(i,1):wish.push(id);saveWish();btn.textContent=wish.includes(id)?'❤️':'🤍';btn.classList.toggle('on',wish.includes(id));showToast(wish.includes(id)?'❤️ Added to wishlist':'Removed from wishlist')}
+function updateBadge(){document.querySelectorAll('#cartCnt').forEach(e=>e.textContent=cartCount())}
+function popBadge(){const e=document.getElementById('cartCnt');if(!e)return;e.classList.add('pop');setTimeout(()=>e.classList.remove('pop'),360)}
+function renderCart(){
+  const items=document.getElementById('cdis'),foot=document.getElementById('cdft');
+  if(!items)return;updateBadge();
+  if(!cart.length){items.innerHTML='<div class="cdemp"><div class="cdei">🛒</div><p>Your cart is empty</p></div>';foot.style.display='none';return}
+  items.innerHTML=cart.map(i=>`<div class="cri"><div class="crim">${i.emoji}</div><div class="crinf"><div class="crnm">${i.name}</div><div class="crpr">₹${(i.price*i.qty).toLocaleString()}</div></div><div class="crqty"><button class="qb" onclick="chgQty(${i.id},-1)">−</button><span class="qv">${i.qty}</span><button class="qb" onclick="chgQty(${i.id},1)">+</button></div><button class="crdel" onclick="remCart(${i.id})">✕</button></div>`).join('');
+  const t=cartTotal();document.getElementById('cdsub').textContent=`₹${t.toLocaleString()}`;document.getElementById('cdtot').textContent=`₹${t.toLocaleString()}`;foot.style.display='flex';
+}
+function toggleCart(){document.getElementById('cdd').classList.toggle('open');document.getElementById('cdov').classList.toggle('open');document.body.style.overflow=document.getElementById('cdd').classList.contains('open')?'hidden':'';renderCart()}
+function checkout(){showToast(`✅ Order placed! Total: ₹${cartTotal().toLocaleString()}`);cart=[];saveCart();setTimeout(toggleCart,500)}
+let _tt;function showToast(html){const t=document.getElementById('toast');if(!t)return;t.innerHTML=html;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2700)}
+/* PRODUCT CARD */
+function pCard(p){
+  const w=wish.includes(p.id);
+  return`<div class="pc">${p.badge?`<span class="pcbdg ${p.badge.toLowerCase()}">${p.badge}</span>`:''}${!p.inStock?'<span class="pcbdg out">SOLD OUT</span>':''}<button class="pcw ${w?'on':''}" onclick="toggleWish(${p.id},this)">${w?'❤️':'🤍'}</button><div class="pci">${p.emoji}</div><div class="pcb"><span class="pcbr">${p.brand}</span><div class="pcn">${p.name}</div><p class="pcd">${p.desc.substring(0,60)}…</p><div class="pcst">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))}<span>(${p.rev})</span></div></div><div class="pcft"><div class="pcpr">${p.old?`<span class="old">₹${p.old.toLocaleString()}</span>`:''} ₹${p.price.toLocaleString()}</div><button class="pcatc" ${!p.inStock?'disabled':''} onclick="addCart(${p.id})">${p.inStock?'+ Cart':'Sold Out'}</button></div></div>`;
+}
+/* MARQUEE */
+const mqs=['Nike','Adidas','Puma','Same-Day Delivery','Kit Customisation','Free Returns','FIFA Quality Pro','Club Kits','Boot Fitting Lab'];
+const mqEl=document.getElementById('mqt');[...mqs,...mqs].forEach(t=>{mqEl.innerHTML+=`<span class="mqi"><span class="mqd">●</span>${t}</span>`});
+/* CATS */
+const cr=document.getElementById('catRow');
+CATS.filter(c=>c.key!=='all').forEach(c=>{cr.innerHTML+=`<a class="catc" href="products.html?cat=${c.key}"><span class="ci">${c.emoji}</span><span class="cl">${c.label}</span></a>`});
+/* HOME CHIPS + GRID */
+let homeCat='all';
+const hc=document.getElementById('homeChips');
+CATS.forEach(c=>{const b=document.createElement('button');b.className='chip'+(c.key==='all'?' on':'');b.textContent=c.label;b.onclick=()=>{homeCat=c.key;document.querySelectorAll('#homeChips .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderFeat()};hc.appendChild(b)});
+function renderFeat(){document.getElementById('featGrid').innerHTML=PRODUCTS.filter(p=>homeCat==='all'||p.cat===homeCat).slice(0,8).map(pCard).join('')}
+renderFeat();
+/* TESTI */
+const tg=document.getElementById('testiGrid');
+TESTI.forEach(t=>{tg.innerHTML+=`<div class="tc"><div class="tct"><div class="tcav">${t.av}</div><div><div class="tcn">${t.name}</div><div class="tcr">${t.role}</div></div></div><div class="tcst">${'★'.repeat(t.stars)}</div><p class="tctx">"${t.text}"</p></div>`});
+/* COUNTERS */
+document.querySelectorAll('.hnv[data-target]').forEach(el=>{
+  const target=+el.dataset.target;let v=0;const step=Math.ceil(target/55);
+  const t=setInterval(()=>{v=Math.min(v+step,target);el.textContent=(target>=1000?(v/1000).toFixed(v===target?0:1)+'K':v)+(v===target?'+':'');if(v===target)clearInterval(t)},20);
+});
+function goSearch(){const q=document.getElementById('srchIn').value.trim();if(q)window.location.href=`products.html?q=${encodeURIComponent(q)}`}
+function nlSub(e){e.preventDefault();showToast('✅ Subscribed! Watch your inbox.');document.getElementById('nlE').value=''}
+renderCart();updateBadge();
+</script>
+</body>
+</html>
