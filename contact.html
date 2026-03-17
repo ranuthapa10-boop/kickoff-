@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>KICKOFF — Contact Us</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#aaff00;--g2:#c8ff3a;--dark:#05050a;--surf:#0c0c14;--card:#111119;--brd:#1a1a26;--txt:#eeeef5;--mut:#4a4a60;--red:#ff3344;--nav:70px}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--txt);font-family:'Syne',sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");opacity:.45}
+/* NAV */
+.nav{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:var(--nav);background:rgba(5,5,10,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:4px;color:var(--g);text-decoration:none}
+.logo em{color:var(--mut);font-style:normal}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--mut);text-decoration:none;font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:color .2s;position:relative;padding-bottom:3px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--g);transition:width .25s}
+.nav-links a:hover{color:var(--txt)}.nav-links a.active{color:var(--g)}.nav-links a.active::after{width:100%}
+.nav-r{display:flex;align-items:center;gap:.75rem}
+.cart-btn{position:relative;background:var(--g);color:#000;border:none;border-radius:8px;padding:.48rem 1.1rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.5px;cursor:pointer;display:flex;align-items:center;gap:.45rem;transition:background .2s,transform .15s}
+.cart-btn:hover{background:var(--g2);transform:translateY(-1px)}
+.cart-btn .cnt{background:#000;color:var(--g);border-radius:100px;width:18px;height:18px;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+/* PAGE HERO */
+.phero{position:relative;padding:5rem 2.5rem 4rem;overflow:hidden;border-bottom:1px solid var(--brd)}
+.phero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(170,255,0,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(170,255,0,.028) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 70% 100% at 15% 60%,#000,transparent);pointer-events:none}
+.phero-glow{position:absolute;left:-80px;top:50%;transform:translateY(-50%);width:480px;height:480px;background:radial-gradient(circle,rgba(170,255,0,.07),transparent 65%);pointer-events:none}
+.phi{position:relative;z-index:1;max-width:600px}
+.ptag{display:inline-flex;align-items:center;gap:.45rem;background:rgba(170,255,0,.08);border:1px solid rgba(170,255,0,.2);color:var(--g);font-size:.67rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:.3rem .9rem;border-radius:100px;margin-bottom:1.4rem;animation:up .5s ease both}
+.ptag::before{content:'●';font-size:.42rem;animation:bl 1.4s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.15}}
+.phero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,7.5vw,7rem);line-height:.91;letter-spacing:2px;animation:up .5s .07s ease both}
+.phero h1 .ol{-webkit-text-stroke:1.5px var(--g);color:transparent}
+.phero p{color:var(--mut);font-size:.96rem;line-height:1.75;margin-top:1.1rem;max-width:400px;animation:up .5s .14s ease both}
+.status-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.75rem;animation:up .5s .21s ease both}
+.spill{display:flex;align-items:center;gap:.45rem;background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:.45rem .9rem;font-size:.72rem;font-weight:700;color:var(--mut)}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--g);animation:bl 1.4s infinite}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+/* CONTACT LAYOUT */
+.contact-body{display:grid;grid-template-columns:1fr 360px;gap:2.5rem;padding:3rem 2.5rem 5rem;max-width:1280px;margin:0 auto}
+/* FORM CARD */
+.fcard{background:var(--card);border:1px solid var(--brd);border-radius:12px;overflow:hidden}
+.tabs{display:flex;border-bottom:1px solid var(--brd);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1;min-width:fit-content;padding:1rem .75rem;background:none;border:none;border-bottom:2px solid transparent;color:var(--mut);font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{color:var(--txt)}.tab.on{color:var(--g);border-bottom-color:var(--g)}
+.tpanel{padding:2.25rem;display:none}
+.tpanel.on{display:block;animation:up .3s ease}
+.ptitle{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:2px;margin-bottom:.3rem}
+.psub{color:var(--mut);font-size:.82rem;margin-bottom:1.75rem}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.fg{margin-bottom:1.1rem}
+.fg label{display:block;font-size:.67rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:.45rem}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--surf);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'Syne',sans-serif;font-size:.87rem;padding:.7rem .95rem;outline:none;resize:none;transition:border-color .25s,box-shadow .25s;-webkit-appearance:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(170,255,0,.45);box-shadow:0 0 0 3px rgba(170,255,0,.06)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--mut)}
+.fg select option{background:#1a1a22}
+.char-hint{font-size:.67rem;color:var(--mut);text-align:right;margin-top:.28rem}
+/* Priority */
+.pri-row{display:flex;gap:.5rem}
+.pri-btn{flex:1;padding:.45rem .5rem;border-radius:7px;background:none;border:1px solid var(--brd);color:var(--mut);font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s}
+.pri-btn:hover{border-color:rgba(170,255,0,.3);color:var(--txt)}
+.pri-btn.on.low{border-color:#00c853;color:#00c853;background:rgba(0,200,83,.08)}
+.pri-btn.on.med{border-color:#f0a500;color:#f0a500;background:rgba(240,165,0,.08)}
+.pri-btn.on.hi{border-color:var(--red);color:var(--red);background:rgba(255,51,68,.08)}
+/* File drop */
+.fdz{border:2px dashed var(--brd);border-radius:10px;padding:1.75rem;text-align:center;cursor:pointer;position:relative;transition:all .25s}
+.fdz:hover,.fdz.dov{border-color:rgba(170,255,0,.4);background:rgba(170,255,0,.03)}
+.fdz input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.fdz .fdi{font-size:1.8rem;margin-bottom:.4rem}
+.fdz p{font-size:.78rem;color:var(--mut);line-height:1.6}
+.fdz strong{color:var(--g)}
+.fdname{font-size:.75rem;color:var(--g);margin-top:.4rem;display:none}
+/* Submit */
+.fsrow{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:.25rem}
+.fsubmit{background:var(--g);color:#000;border:none;border-radius:8px;padding:.8rem 2rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.5rem}
+.fsubmit:hover{background:var(--g2);transform:translateY(-1px)}
+.fsubmit.loading .spin{display:block!important}.fsubmit.loading .bt{display:none}
+.spin{width:15px;height:15px;border:2px solid rgba(0,0,0,.25);border-top-color:#000;border-radius:50%;animation:rot .65s linear infinite;display:none}
+@keyframes rot{to{transform:rotate(360deg)}}
+.fnote{font-size:.72rem;color:var(--mut)}
+/* Success */
+.sstate{display:none;text-align:center;padding:2.5rem 1.5rem;animation:up .4s ease}
+.ssico{font-size:3.5rem;margin-bottom:.85rem}
+.sstit{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;color:var(--g);margin-bottom:.65rem}
+.sstxt{color:var(--mut);font-size:.87rem;line-height:1.72}
+/* RIGHT COL */
+.cright{display:flex;flex-direction:column;gap:1.25rem}
+.icard{background:var(--card);border:1px solid var(--brd);border-radius:12px;overflow:hidden}
+.ich{padding:1.2rem 1.4rem;border-bottom:1px solid var(--brd);font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:2px}
+.icrow{display:flex;align-items:flex-start;gap:.85rem;padding:1.15rem 1.4rem;border-bottom:1px solid var(--brd);transition:background .2s;text-decoration:none}
+.icrow:last-child{border-bottom:none}
+.icrow:hover{background:rgba(170,255,0,.03)}
+.icico{width:38px;height:38px;flex-shrink:0;border-radius:7px;background:rgba(170,255,0,.07);border:1px solid rgba(170,255,0,.15);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.iclbl{font-size:.64rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:.18rem}
+.icval{font-size:.86rem;font-weight:700;color:var(--txt)}
+.icsub{font-size:.7rem;color:var(--mut);margin-top:.1rem}
+.chat-card{background:linear-gradient(135deg,rgba(170,255,0,.08),rgba(170,255,0,.03));border:1px solid rgba(170,255,0,.22);border-radius:12px;padding:1.6rem;position:relative;overflow:hidden}
+.chat-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(170,255,0,.1),transparent 70%)}
+.clive{display:flex;align-items:center;gap:.45rem;font-size:.67rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g);margin-bottom:.65rem}
+.cldot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:bl 1.3s infinite}
+.chat-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:2px;margin-bottom:.45rem}
+.chat-card p{font-size:.8rem;color:var(--mut);line-height:1.6;margin-bottom:1.1rem}
+.chatbtn{background:var(--g);color:#000;border:none;border-radius:8px;padding:.68rem 1.3rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.83rem;cursor:pointer;width:100%;transition:background .2s}
+.chatbtn:hover{background:var(--g2)}
+.soccard{background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:1.4rem}
+.soccard h4{font-size:.67rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:.9rem}
+.socgrid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.socbtn{display:flex;align-items:center;gap:.5rem;background:var(--surf);border:1px solid var(--brd);border-radius:7px;padding:.6rem .8rem;text-decoration:none;color:var(--txt);font-size:.78rem;font-weight:700;transition:all .2s;cursor:pointer}
+.socbtn:hover{border-color:rgba(170,255,0,.3);color:var(--g)}
+/* MAP */
+.mapcard{background:var(--card);border:1px solid var(--brd);border-radius:12px;overflow:hidden}
+.mapvis{height:170px;background:#0c0c14;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:1px solid var(--brd)}
+.mapvis::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(170,255,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(170,255,0,.04) 1px,transparent 1px);background-size:26px 26px}
+.mappin{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.mappin::after{content:'';width:36px;height:2px;background:rgba(170,255,0,.28);border-radius:100px;margin-top:4px}
+.mapdot{width:46px;height:46px;background:rgba(170,255,0,.1);border:2px solid rgba(170,255,0,.38);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(170,255,0,.3)}50%{box-shadow:0 0 0 14px rgba(170,255,0,0)}}
+.mapinfo{padding:1.2rem 1.4rem}
+.mapinfo strong{font-size:.87rem;font-weight:700;display:block;margin-bottom:.3rem}
+.mapinfo p{font-size:.79rem;color:var(--mut);line-height:1.6;margin-bottom:.85rem}
+.mapbtn{display:inline-flex;align-items:center;gap:.4rem;background:none;border:1px solid var(--brd);color:var(--txt);border-radius:6px;padding:.45rem 1rem;font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer;transition:all .2s}
+.mapbtn:hover{border-color:var(--g);color:var(--g)}
+/* FAQ */
+.faq-sec{padding:0 2.5rem 5rem;max-width:1280px;margin:0 auto}
+.faqgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 4rem;margin-top:2.25rem}
+.faqitem{border-bottom:1px solid var(--brd)}
+.faqq{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem 0;cursor:pointer;font-weight:700;font-size:.88rem;transition:color .2s;user-select:none;background:none;border:none;color:var(--txt);font-family:'Syne',sans-serif;width:100%;text-align:left}
+.faqq:hover{color:var(--g)}
+.faqarr{width:25px;height:25px;flex-shrink:0;border:1px solid var(--brd);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;color:var(--mut);transition:transform .3s,background .3s,border-color .3s}
+.faqitem.open .faqarr{transform:rotate(45deg);background:rgba(170,255,0,.1);border-color:rgba(170,255,0,.3);color:var(--g)}
+.faqa{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faqa-inner{padding:0 0 1.2rem;color:var(--mut);font-size:.85rem;line-height:1.75}
+.faqitem.open .faqa{max-height:200px}
+/* TOAST */
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);color:var(--txt);border:1px solid rgba(170,255,0,.2);font-size:.82rem;font-weight:700;padding:.65rem 1.4rem;border-radius:100px;z-index:9500;transition:transform .35s cubic-bezier(.4,0,.2,1);pointer-events:none;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.55)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+/* FOOTER */
+.footer{border-top:1px solid var(--brd);padding:2.25rem 2.5rem}
+.fb{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.fb .flogo{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:4px;color:var(--g);text-decoration:none}
+.fb .flogo em{color:var(--mut);font-style:normal}
+.fb p{font-size:.72rem;color:var(--mut)}
+/* RESPONSIVE */
+@media(max-width:1100px){.contact-body{grid-template-columns:1fr}.cright{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}.mapcard{grid-column:1/-1}}
+@media(max-width:768px){
+  .nav{padding:0 1.25rem}.nav-links{display:none}
+  .phero{padding:3.5rem 1.25rem 3rem}
+  .contact-body{padding:2rem 1.25rem 3.5rem}
+  .tpanel{padding:1.5rem}
+  .f2{grid-template-columns:1fr}
+  .faq-sec{padding:0 1.25rem 3.5rem}
+  .faqgrid{grid-template-columns:1fr;gap:0}
+  .cright{grid-template-columns:1fr}
+  .mapcard{grid-column:auto}
+  .footer{padding:1.75rem 1.25rem}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html">KICK<em>OFF</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <div class="nav-r">
+    <button class="cart-btn" onclick="toggleCart()">🛒 Cart <span class="cnt" id="cartCnt">0</span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="phero">
+  <div class="phero-grid"></div>
+  <div class="phero-glow"></div>
+  <div class="phi">
+    <span class="ptag">We're Here to Help</span>
+    <h1>GET IN<br/><span class="ol">TOUCH</span></h1>
+    <p>Questions about an order, custom kits, or club partnerships? Our team responds faster than a counter-attack.</p>
+    <div class="status-row">
+      <div class="spill"><div class="sdot"></div>Live Chat Online</div>
+      <div class="spill">📧 Avg. reply: 2 hrs</div>
+      <div class="spill">📞 Mon–Sat 9AM–7PM</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT BODY -->
+<div class="contact-body">
+  <!-- FORM CARD -->
+  <div class="fcard">
+    <div class="tabs">
+      <button class="tab on" onclick="switchTab('gen',this)">💬 General</button>
+      <button class="tab" onclick="switchTab('ord',this)">📦 Order Help</button>
+      <button class="tab" onclick="switchTab('cus',this)">🎨 Custom Kit</button>
+      <button class="tab" onclick="switchTab('clb',this)">🏆 Club / B2B</button>
+    </div>
+
+    <!-- GENERAL -->
+    <div class="tpanel on" id="tp-gen">
+      <div id="tf-gen">
+        <div class="ptitle">GENERAL ENQUIRY</div>
+        <p class="psub">Got a question? We'd love to hear from you.</p>
+        <div class="f2">
+          <div class="fg"><label>First Name *</label><input type="text" placeholder="Rohan"/></div>
+          <div class="fg"><label>Last Name *</label><input type="text" placeholder="Kumar"/></div>
+        </div>
+        <div class="fg"><label>Email *</label><input type="email" placeholder="rohan@email.com"/></div>
+        <div class="fg"><label>Phone</label><input type="tel" placeholder="+91 98765 43210"/></div>
+        <div class="fg"><label>Subject *</label>
+          <select><option value="">— Select topic —</option><option>Product Information</option><option>Shipping & Delivery</option><option>Returns & Refunds</option><option>Website Issue</option><option>Feedback</option><option>Other</option></select>
+        </div>
+        <div class="fg"><label>Message *</label>
+          <textarea rows="5" placeholder="Tell us how we can help…" oninput="cc(this,'gcc',500)"></textarea>
+          <div class="char-hint"><span id="gcc">0</span>/500</div>
+        </div>
+        <div class="fg"><label>Priority</label>
+          <div class="pri-row">
+            <button class="pri-btn low on" onclick="setPri('low',this)">🟢 Low</button>
+            <button class="pri-btn med" onclick="setPri('med',this)">🟡 Medium</button>
+            <button class="pri-btn hi" onclick="setPri('hi',this)">🔴 Urgent</button>
+          </div>
+        </div>
+        <div class="fsrow">
+          <button class="fsubmit" onclick="fSub('gen')"><div class="spin"></div><span class="bt">Send Message →</span></button>
+          <p class="fnote">We reply within 2 hours on weekdays.</p>
+        </div>
+      </div>
+      <div class="sstate" id="ss-gen">
+        <div class="ssico">✅</div><div class="sstit">MESSAGE SENT!</div>
+        <p class="sstxt">Thanks for reaching out! Our team will reply within 2 hours. Check your inbox soon.</p>
+        <button class="fsubmit" style="margin:1.5rem auto 0;display:flex" onclick="resetF('gen')">Send Another →</button>
+      </div>
+    </div>
+
+    <!-- ORDER HELP -->
+    <div class="tpanel" id="tp-ord">
+      <div id="tf-ord">
+        <div class="ptitle">ORDER SUPPORT</div>
+        <p class="psub">Issue with your order? We'll sort it fast.</p>
+        <div class="f2">
+          <div class="fg"><label>Full Name *</label><input type="text" placeholder="Your full name"/></div>
+          <div class="fg"><label>Order Number *</label><input type="text" placeholder="KO-2026-XXXXX"/></div>
+        </div>
+        <div class="fg"><label>Email at Checkout *</label><input type="email" placeholder="order@email.com"/></div>
+        <div class="fg"><label>Issue Type *</label>
+          <select><option value="">— What's wrong? —</option><option>Item not received</option><option>Wrong item delivered</option><option>Damaged / defective</option><option>Refund request</option><option>Cancel order</option><option>Track my order</option></select>
+        </div>
+        <div class="fg"><label>Upload Photo (optional)</label>
+          <div class="fdz" id="fdz" ondragover="dov(event)" ondragleave="doleave()" ondrop="dodrop(event)">
+            <input type="file" accept="image/*" onchange="fsel(this)"/>
+            <div class="fdi">📎</div>
+            <p>Drag & drop or <strong>click to browse</strong><br/><span style="font-size:.68rem">PNG, JPG up to 5MB</span></p>
+            <div class="fdname" id="fdname"></div>
+          </div>
+        </div>
+        <div class="fg"><label>Description *</label><textarea rows="4" placeholder="Describe the issue in detail…" oninput="cc(this,'occ',400)"></textarea><div class="char-hint"><span id="occ">0</span>/400</div></div>
+        <div class="fsrow">
+          <button class="fsubmit" onclick="fSub('ord')"><div class="spin"></div><span class="bt">Submit Issue →</span></button>
+          <p class="fnote">Resolved within 24 hours.</p>
+        </div>
+      </div>
+      <div class="sstate" id="ss-ord">
+        <div class="ssico">📦</div><div class="sstit">TICKET RAISED!</div>
+        <p class="sstxt">Your issue has been logged. Our fulfilment team will reach out within 24 hours with a resolution.</p>
+        <button class="fsubmit" style="margin:1.5rem auto 0;display:flex" onclick="resetF('ord')">New Ticket →</button>
+      </div>
+    </div>
+
+    <!-- CUSTOM KIT -->
+    <div class="tpanel" id="tp-cus">
+      <div id="tf-cus">
+        <div class="ptitle">CUSTOM KIT REQUEST</div>
+        <p class="psub">Build the perfect personalised kit for you or your team.</p>
+        <div class="f2">
+          <div class="fg"><label>Your Name *</label><input type="text" placeholder="Full name"/></div>
+          <div class="fg"><label>Email *</label><input type="email" placeholder="your@email.com"/></div>
+        </div>
+        <div class="f2">
+          <div class="fg"><label>Jersey Number</label><input type="number" placeholder="e.g. 10" min="1" max="99"/></div>
+          <div class="fg"><label>Font Style</label>
+            <select><option>Classic Block</option><option>Bold Italic</option><option>Script</option><option>Collegiate</option><option>Custom (describe below)</option></select>
+          </div>
+        </div>
+        <div class="f2">
+          <div class="fg"><label>Base Kit</label>
+            <select><option>Manchester City Home</option><option>Real Madrid Away</option><option>Brazil Home</option><option>Arsenal Third</option><option>Inter Milan Home</option><option>Other (describe)</option></select>
+          </div>
+          <div class="fg"><label>Quantity</label><input type="number" placeholder="1" min="1"/></div>
+        </div>
+        <div class="fg"><label>Special Instructions</label>
+          <textarea rows="4" placeholder="Club badge placement, sponsor logo, colour changes, captain armband…" oninput="cc(this,'ccc',400)"></textarea>
+          <div class="char-hint"><span id="ccc">0</span>/400</div>
+        </div>
+        <div class="fg"><label>Preferred Delivery Date</label><input type="date"/></div>
+        <div class="fsrow">
+          <button class="fsubmit" onclick="fSub('cus')"><div class="spin"></div><span class="bt">Request Quote →</span></button>
+          <p class="fnote">Quotes delivered within 12 hours.</p>
+        </div>
+      </div>
+      <div class="sstate" id="ss-cus">
+        <div class="ssico">🎨</div><div class="sstit">QUOTE REQUESTED!</div>
+        <p class="sstxt">Our customisation team will send a detailed quote to your email within 12 hours.</p>
+        <button class="fsubmit" style="margin:1.5rem auto 0;display:flex" onclick="resetF('cus')">New Request →</button>
+      </div>
+    </div>
+
+    <!-- CLUB B2B -->
+    <div class="tpanel" id="tp-clb">
+      <div id="tf-clb">
+        <div class="ptitle">CLUB &amp; B2B ENQUIRY</div>
+        <p class="psub">Outfit your squad or explore wholesale partnerships.</p>
+        <div class="f2">
+          <div class="fg"><label>Contact Name *</label><input type="text" placeholder="Your name"/></div>
+          <div class="fg"><label>Club / Organisation *</label><input type="text" placeholder="FC Hyderabad Stars"/></div>
+        </div>
+        <div class="f2">
+          <div class="fg"><label>Email *</label><input type="email" placeholder="manager@club.com"/></div>
+          <div class="fg"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
+        </div>
+        <div class="f2">
+          <div class="fg"><label>Enquiry Type *</label>
+            <select><option value="">— Select —</option><option>Bulk Kit Order (10+)</option><option>Wholesale / Reseller</option><option>Academy Partnership</option><option>School / College Order</option><option>Sponsorship</option></select>
+          </div>
+          <div class="fg"><label>Units Needed</label><input type="number" placeholder="e.g. 25" min="10"/></div>
+        </div>
+        <div class="fg"><label>Budget per Unit (₹)</label><input type="number" placeholder="2500"/></div>
+        <div class="fg"><label>Message *</label>
+          <textarea rows="4" placeholder="Club details, timeline, design preferences and any special requirements…" oninput="cc(this,'bcc',500)"></textarea>
+          <div class="char-hint"><span id="bcc">0</span>/500</div>
+        </div>
+        <div class="fsrow">
+          <button class="fsubmit" onclick="fSub('clb')"><div class="spin"></div><span class="bt">Send Enquiry →</span></button>
+          <p class="fnote">Dedicated manager assigned within 4 hrs.</p>
+        </div>
+      </div>
+      <div class="sstate" id="ss-clb">
+        <div class="ssico">🏆</div><div class="sstit">ENQUIRY RECEIVED!</div>
+        <p class="sstxt">A dedicated account manager will be assigned within 4 hours. Expect a call or email shortly!</p>
+        <button class="fsubmit" style="margin:1.5rem auto 0;display:flex" onclick="resetF('clb')">New Enquiry →</button>
+      </div>
+    </div>
+  </div><!-- /fcard -->
+
+  <!-- RIGHT -->
+  <div class="cright">
+    <div class="icard">
+      <div class="ich">CONTACT INFO</div>
+      <a class="icrow" href="mailto:hello@kickoff.in">
+        <div class="icico">📧</div>
+        <div><div class="iclbl">Email</div><div class="icval">hello@kickoff.in</div><div class="icsub">Avg. reply in 2 hours</div></div>
+      </a>
+      <a class="icrow" href="tel:+918001234567">
+        <div class="icico">📞</div>
+        <div><div class="iclbl">Phone</div><div class="icval">+91 800 123 4567</div><div class="icsub">Mon–Sat, 9 AM – 7 PM IST</div></div>
+      </a>
+      <div class="icrow">
+        <div class="icico">📍</div>
+        <div><div class="iclbl">Store</div><div class="icval">42 Jubilee Hills, Hyderabad</div><div class="icsub">Telangana — 500033</div></div>
+      </div>
+      <div class="icrow">
+        <div class="icico">🕐</div>
+        <div><div class="iclbl">Hours</div><div class="icval">Mon–Sat: 10AM – 9PM</div><div class="icsub">Sunday: 11AM – 7PM</div></div>
+      </div>
+    </div>
+
+    <div class="chat-card">
+      <div class="clive"><div class="cldot"></div>Support Online</div>
+      <h3>LIVE CHAT</h3>
+      <p>Chat directly with a KICKOFF expert. Average wait under 2 minutes.</p>
+      <button class="chatbtn" onclick="showToast('💬 Connecting to a live agent…')">Start Live Chat →</button>
+    </div>
+
+    <div class="soccard">
+      <h4>Find Us On</h4>
+      <div class="socgrid">
+        <a class="socbtn" href="#">📘 Facebook</a>
+        <a class="socbtn" href="#">📸 Instagram</a>
+        <a class="socbtn" href="#">🐦 Twitter / X</a>
+        <a class="socbtn" href="#">▶️ YouTube</a>
+      </div>
+    </div>
+
+    <div class="mapcard">
+      <div class="mapvis">
+        <div class="mappin"><div class="mapdot">📍</div></div>
+      </div>
+      <div class="mapinfo">
+        <strong>KICKOFF — Flagship Store</strong>
+        <p>42 Road No. 12, Jubilee Hills,<br/>Hyderabad, Telangana 500033</p>
+        <button class="mapbtn" onclick="window.open('https://maps.google.com/?q=Jubilee+Hills+Hyderabad','_blank')">🗺️ Get Directions →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-sec">
+  <p style="font-size:.67rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-bottom:.7rem">Quick Answers</p>
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:2px;margin-bottom:0">BEFORE YOU <span style="color:var(--g)">WRITE</span></h2>
+  <div class="faqgrid">
+    <div>
+      <div class="faqitem"><button class="faqq" onclick="toggleFaq(this)">How long does delivery take? <span class="faqarr">+</span></button><div class="faqa"><div class="faqa-inner">Standard delivery is 2–4 business days across India. Same-day delivery is available in 20+ cities for orders placed before 2 PM. Express next-day shipping is also available at checkout.</div></div></div>
+      <div class="faqitem"><button class="faqq" onclick="toggleFaq(this)">Can I return or exchange a product? <span class="faqarr">+</span></button><div class="faqa"><div class="faqa-inner">Yes — 30-day hassle-free returns on all non-customised items. Customised items can only be returned for manufacturing defects. Initiate a return from your account or contact our support team.</div></div></div>
+      <div class="faqitem"><button class="faqq" onclick="toggleFaq(this)">How do I track my order? <span class="faqarr">+</span></button><div class="faqa"><div class="faqa-inner">Once your order ships, you'll receive an SMS and email with a tracking link. You can also log into your KICKOFF account and check Order History for real-time status updates.</div></div></div>
+    </div>
+    <div>
+      <div class="faqitem"><button class="faqq" onclick="toggleFaq(this)">Do you offer bulk / club discounts? <span class="faqarr">+</span></button><div class="faqa"><div class="faqa-inner">Absolutely! Tiered discounts start at 10+ units. Fill in the Club & B2B form or email clubs@kickoff.in — our team replies with a custom quote within 4 hours.</div></div></div>
+      <div class="faqitem"><button class="faqq" onclick="toggleFaq(this)">How long does customisation take? <span class="faqarr">+</span></button><div class="faqa"><div class="faqa-inner">Standard name and number: 48 hours. Complex designs or bulk orders: 5–7 business days. Rush options are available — mention your deadline in the Custom Kit form above.</div></div></div>
+      <div class="faqitem"><button class="faqq" onclick="toggleFaq(this)">What payment methods do you accept? <span class="faqarr">+</span></button><div class="faqa"><div class="faqa-inner">We accept UPI (GPay, PhonePe, Paytm), all major credit/debit cards, net banking, and EMI options. All payments are 100% secure and PCI-DSS compliant.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="fb">
+    <a class="flogo" href="index.html">KICK<em>OFF</em></a>
+    <p>© 2026 KICKOFF Football Store. All rights reserved.</p>
+    <p>🇮🇳 Made for players — Hyderabad, India</p>
+  </div>
+</footer>
+
+<!-- CART DRAWER (read-only on contact page) -->
+<div id="toast"></div>
+
+<script src="store-data.js"></script>
+<script>
+let cart=JSON.parse(localStorage.getItem('ko_cart')||'[]');
+function cartCount(){return cart.reduce((s,i)=>s+i.qty,0)}
+function updateBadge(){document.getElementById('cartCnt').textContent=cartCount()}
+function toggleCart(){window.location.href='products.html'}
+updateBadge();
+
+let _tt;function showToast(html){const t=document.getElementById('toast');if(!t)return;t.innerHTML=html;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2700)}
+
+/* TABS */
+function switchTab(key,btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('tp-'+key).classList.add('on');
+}
+
+/* FORM HELPERS */
+function cc(el,id,max){const l=el.value.length;const s=document.getElementById(id);if(s){s.textContent=l;s.style.color=l>max*.85?(l>=max?'var(--red)':'#f0a500'):'var(--mut)'}if(l>max)el.value=el.value.substring(0,max)}
+function setPri(lvl,btn){btn.closest('.pri-row').querySelectorAll('.pri-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on')}
+function fSub(key){
+  const btn=document.querySelector(`#tp-${key} .fsubmit`);
+  btn.classList.add('loading');btn.disabled=true;
+  setTimeout(()=>{btn.classList.remove('loading');btn.disabled=false;document.getElementById('tf-'+key).style.display='none';document.getElementById('ss-'+key).style.display='block';showToast('✅ Message sent successfully!')},1700);
+}
+function resetF(key){document.getElementById('tf-'+key).style.display='block';document.getElementById('ss-'+key).style.display='none'}
+/* File drop */
+function dov(e){e.preventDefault();document.getElementById('fdz').classList.add('dov')}
+function doleave(){document.getElementById('fdz').classList.remove('dov')}
+function dodrop(e){e.preventDefault();doleave();const f=e.dataTransfer.files[0];if(f)showFn(f.name)}
+function fsel(inp){if(inp.files[0])showFn(inp.files[0].name)}
+function showFn(n){const el=document.getElementById('fdname');el.textContent='📎 '+n;el.style.display='block'}
+/* FAQ */
+function toggleFaq(btn){const item=btn.parentElement;const was=item.classList.contains('open');document.querySelectorAll('.faqitem.open').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open')}
+/* Scroll reveal */
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';ro.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.icard,.chat-card,.soccard,.mapcard').forEach(el=>{el.style.cssText+='opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;';ro.observe(el)});
+</script>
+</body>
+</html>
